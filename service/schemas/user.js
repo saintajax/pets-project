@@ -28,7 +28,8 @@ const userSchema = new mongoose.Schema({
     required: [true, "Verify token is required"],
   },
   favorite: {
-    type: [String],
+    type: [mongoose.SchemaTypes.ObjectId],
+    ref: 'notice',
   },
   token: String,
   avatarURL: String,
