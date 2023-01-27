@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const authRouter = require("./api/user");
+const friendsRouter = require("./api/friends");
+const newsRouter = require("./api/news");
 
 const app = express();
 
@@ -13,7 +15,9 @@ app
   .use(logger("dev"))
   .use(cors())
   .use(express.json())
-  .use("/api/auth", authRouter);
+  .use("/api/auth", authRouter)
+  .use("/api/friends", friendsRouter)
+  .use("/api/news", newsRouter);
 
 app.use((_, res, __) => {
   res.status(404).json({

@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { handleSaveErr } = require("../../helpers/handleSaveErr");
+const handleSaveErr = require("../../helpers/handleSaveErr");
 
 const newsSchema = new Schema(
   {
@@ -26,6 +26,6 @@ const newsSchema = new Schema(
 
 newsSchema.post("save", handleSaveErr);
 
-const News = model("News", newsSchema);
+const News = model("news", newsSchema);
 
 module.exports = News;

@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { handleSaveErr } = require("../../helpers/handleSaveErr");
+const handleSaveErr = require("../../helpers/handleSaveErr");
 
 const friendsSchema = new Schema(
   {
@@ -7,7 +7,15 @@ const friendsSchema = new Schema(
       type: String,
       required: true,
     },
-    imageSrc: {
+    url: {
+      type: String,
+      required: true,
+    },
+    addressUrl: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
       type: String,
       required: true,
     },
@@ -15,14 +23,13 @@ const friendsSchema = new Schema(
       type: String,
       required: true,
     },
-    workingDays: {
+    workDays: {
       type: Array,
       required: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     phone: {
       type: String,
@@ -35,6 +42,6 @@ const friendsSchema = new Schema(
 
 friendsSchema.post("save", handleSaveErr);
 
-const Friend = model("friend", friendsSchema);
+const Friend = model("friends", friendsSchema);
 
 module.exports = Friend;
