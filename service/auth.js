@@ -3,7 +3,7 @@ const {
   NotAutorizedError,
   RegistrationConflictError,
   VerificationError,
-} = require("../helpers/httpErrors");
+} = require("../helpers/authErrors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
@@ -28,12 +28,16 @@ const sendVerification = async (email, verificationToken) => {
   });
 };
 
-const registerUser = async (password, email) => {
+const registerUser = async (body) => {
+    const { password, email, name, cityRegion, phone} = body;
   const avatarURL = gravatar.url(email);
   const verificationToken = uuid.v4();
   const user = new User({
     password,
     email,
+    name,
+    cityRegion, 
+    phone,
     avatarURL,
     verificationToken,
   });

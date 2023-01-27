@@ -2,8 +2,7 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../service/schemas/user");
 const {
   NotAutorizedError
-
-} = require("../helpers/httpErrors");
+} = require("../helpers/authErrors");
 
 const authMiddleware = async (req, res, next) => {
   try {

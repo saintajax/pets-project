@@ -17,11 +17,11 @@ const userSchema = new mongoose.Schema({
   },
   cityRegion: {
     type: String,
-    required: [true, "Location is required example: Brovary, Kyiv"],
+    // required: [true, "Location is required example: Brovary, Kyiv"],
   },
   phone: {
     type: String,
-    required: [true, "Enter mobile phone number +380xxxxxxxxx"],
+    // required: [true, "Enter mobile phone number +380xxxxxxxxx"],
   },
   verificationToken: {
     type: String,
