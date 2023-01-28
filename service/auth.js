@@ -13,7 +13,7 @@ const uuid = require("uuid");
 
 const sendVerification = async (email, verificationToken) => {
   const transport = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: process.env.SMTP_HOST,
     port: 465,
     auth: {
       user: process.env.EMAIL_USER,

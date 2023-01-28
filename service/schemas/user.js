@@ -23,13 +23,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     // required: [true, "Enter mobile phone number +380xxxxxxxxx"],
   },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
   verificationToken: {
     type: String,
     required: [true, "Verify token is required"],
   },
   favorite: {
     type: [mongoose.SchemaTypes.ObjectId],
-    ref: 'notice',
+    ref: "notice",
   },
   token: String,
   avatarURL: String,
