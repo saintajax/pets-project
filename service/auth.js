@@ -49,9 +49,9 @@ const registerUser = async (body) => {
 
 const repeatEmail = async (email) => {
   const user = await User.findOne({ email });
-  const { verificationToken, verify } = user;
-  if (verify) throw new RegistrationConflictError("Verification has already been passed");
-  await sendVerification(email, verificationToken);
+  if (!user) throw new RegistrationConflictError("User doesn't exist");
+  if (user.verify) throw new RegistrationConflictError("Verification has already been passed");
+  await sendVerification(email, user.verificationToken);
   return;
 };
 

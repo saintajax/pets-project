@@ -43,20 +43,11 @@ const verifyEmailController = async (req, res, next) => {
   res.status(200).json({ message: "Verification successful" });
 };
 
-//   const repeatEmailController = async (req, res, next) => {
-//     const schema = Joi.object({
-//       email: Joi.string()
-//         .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
-//         .required(),
-//     });
-//     const validationResult = schema.validate(req.body);
-//     if (validationResult.error) {
-//       return res.status(400).json({ error: validationResult.error });
-//     }
-//     const { email } = req.body;
-//     await repeatEmail(email);
-//     res.status(200).json({ message: "Verification email sent" });
-//   };
+  const repeatEmailController = async (req, res, next) => {
+    const { email } = req.body;
+    await repeatEmail(email);
+    res.status(200).json({ message: "Verification email sent" });
+  };
 
 const postLogin = async (req, res, next) => {
   const schema = Joi.object({
@@ -74,9 +65,9 @@ const postLogin = async (req, res, next) => {
   const result = await loginUser(password, email);
   const {
     token,
-    user: { subscription },
+    user: { name, cityRegion, phone, favorite, avatarURL },
   } = result;
-  res.status(200).json({ token, user: { email, subscription } });
+  res.status(200).json({ token, user: { email, name, cityRegion, phone, favorite, avatarURL} });
 };
 
 const postLogout = async (req, res, next) => {
@@ -86,8 +77,8 @@ const postLogout = async (req, res, next) => {
 };
 const getCurrent = async (req, res, next) => {
   const { user } = req;
-  const { email, subscription } = await getCurrentUser(user._id);
-  res.status(200).json({ email, subscription });
+  const { email, name, cityRegion, phone, favorite, avatarURL } = await getCurrentUser(user._id);
+  res.status(200).json({ email, name, cityRegion, phone, favorite, avatarURL });
 };
 
 module.exports = {
@@ -96,5 +87,5 @@ module.exports = {
   postLogout,
   getCurrent,
   verifyEmailController,
-  // repeatEmailController,
+  repeatEmailController,
 };

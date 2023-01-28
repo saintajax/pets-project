@@ -26,7 +26,8 @@ const authMiddleware = async (req, res, next) => {
     
     next();
   } catch (err) {
-    next(new NotAutorizedError("Not authorized"));
+    console.log(err);
+    next();
   }
 };
 
