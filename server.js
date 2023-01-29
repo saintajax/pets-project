@@ -46,7 +46,7 @@ const uriDb = process.env.DB_HOST;
 
 mongoose.Promise = global.Promise;
 
-const connection = mongoose.connect(uriDb, {
+const connection = mongoose.connect(`${uriDb}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
