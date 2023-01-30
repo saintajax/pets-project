@@ -7,7 +7,7 @@ const validateBody = (schema) => {
       req.body = validated;
       next();
     } catch (err) {
-      err.status(400);
+    //   err.status(400);
       next(err);
     }
   };
