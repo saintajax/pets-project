@@ -41,6 +41,7 @@ const registerUser = async (body) => {
     avatarURL,
     verificationToken,
   });
+  if (!user) throw new RegistrationConflictError("Email in use");
   const result = await user.save();
   if (!result) throw new RegistrationConflictError("Email in use");
   await sendVerification(email, verificationToken);
