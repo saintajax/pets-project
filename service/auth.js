@@ -16,15 +16,15 @@ const sendVerification = async (email, verificationToken) => {
     host: process.env.SMTP_HOST,
     port: 465,
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: process.env.MY_EMAIL,
+      pass: process.env.MY_EMAIL_PW,
     },
   });
   await transport.sendMail({
-    from: process.env.EMAIL_FROM,
+    from: process.env.MY_EMAIL,
     to: email,
     subject: "Petly verification",
-    text: `Plz confirm your email ${process.env.AUTH_FRONTEND_URL}verify/${verificationToken}`,
+    text: `Plz confirm your email ${process.env.BASE_URL}/api/auth/verify/${verificationToken}`,
   });
 };
 
@@ -73,7 +73,7 @@ const loginUser = async (password, email) => {
     {
       _id: login._id,
     },
-    process.env.JWT_SECRET
+    process.env.SECRET_KEY
   );
   const user = await User.findOneAndUpdate({ _id: login._id }, { token });
   return { token, user };
