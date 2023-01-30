@@ -19,26 +19,13 @@ app
   .use("/api/friends", friendsRouter)
   .use("/api/news", newsRouter);
 
-app.use((_, res, __) => {
-  res.status(404).json({
-    status: "error",
-    code: 404,
-    message: `Use api on routes: 
-    /api/registration - registration user {username, email, password}
-    /api/login - login {email, password}
-    /api/list - get message if user is authenticated`,
-    data: "Not found",
-  });
+app.use((req, res) => {
+  res.status(404).json({ message: "Not found" });
 });
 
-app.use((err, _, res, __) => {
-  console.log(err.stack);
-  res.status(500).json({
-    status: "fail",
-    code: 500,
-    message: err.message,
-    data: "Internal Server Error",
-  });
+app.use((err, req, res, next) => {
+  const { status = 500, message = "Server error" } = err;
+  res.status(status).json({ message });
 });
 
 const PORT = process.env.PORT || 3000;
