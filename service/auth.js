@@ -79,6 +79,18 @@ const loginUser = async (password, email) => {
   return { token, user };
 };
 
+const updateUser = async (userId, body) => {
+  const { name, email, phone, cityRegion, birthday } = body;
+  const result = await User.findOneAndUpdate(
+    { _id: userId },
+    {
+      $set: { name, email, cityRegion, phone, birthday },
+    },
+    { new: true, fields: { password: 0, __v: 0, verify:0, verificationToken: 0, avatarURL: 0 } }
+  );
+  return result;
+};
+
 const logoutUser = async (id) => {
   await User.findOneAndUpdate({ _id: id }, { token: null });
   return;
@@ -92,6 +104,7 @@ module.exports = {
   loginUser,
   logoutUser,
   getCurrentUser,
+  updateUser,
   verifyUser,
   repeatEmail,
 };

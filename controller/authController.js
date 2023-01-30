@@ -2,6 +2,7 @@ const {
   registerUser,
   loginUser,
   logoutUser,
+  updateUser,
   getCurrentUser,
   verifyUser,
   repeatEmail,
@@ -43,6 +44,19 @@ const logout = async (req, res, next) => {
   await logoutUser(user._id);
   res.status(204).json({ message: "Logged out" });
 };
+
+const update = async (req, res, next) => {
+  const { name, email, phone, cityRegion, birthday } = req.body;
+  if (name || email || phone || cityRegion || birthday) {
+    const upContact = await updateUser(
+      req.user._id,
+      req.body
+    );
+    if (!upContact) res.status(404).json({ message: "Not found user" });
+    res.status(200).json(upContact);
+  } else res.status(400).json({ message: "missing fields" });
+};
+
 const getCurrent = async (req, res, next) => {
   const { user } = req;
   const { email, name, cityRegion, phone, favorite, avatarURL } = await getCurrentUser(user._id);
@@ -53,6 +67,7 @@ module.exports = {
   register,
   login,
   logout,
+  update,
   getCurrent,
   verifyEmailController,
   repeatEmailController,
