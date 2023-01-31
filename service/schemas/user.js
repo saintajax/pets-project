@@ -18,15 +18,13 @@ const userSchema = new mongoose.Schema({
   },
   cityRegion: {
     type: String,
-    // required: [true, "Location is required example: Brovary, Kyiv"],
   },
   phone: {
     type: String,
-    // required: [true, "Enter mobile phone number +380xxxxxxxxx"],
   },
   birthday: {
     type: Date,
-    // required: [true, "Enter mobile phone number +380xxxxxxxxx"],
+    default: '00.00.0000',
   },
   verify: {
     type: Boolean,

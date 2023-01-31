@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.post("/register", validateBody(registerSchema), catchWrapper(register));
 router.post("/login", validateBody(loginSchema), catchWrapper(login));
-router.post("/update",[authMiddleware,validateBody(updateSchema)], catchWrapper(update));
+router.patch("/update",[authMiddleware,validateBody(updateSchema)], catchWrapper(update));
 router.post("/logout", authMiddleware, catchWrapper(logout));
 router.post("/verify", catchWrapper(repeatEmailController));
 router.get("/verify/:verificationToken", catchWrapper(verifyEmailController));
