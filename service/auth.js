@@ -24,19 +24,19 @@ const sendVerification = async (email, verificationToken) => {
     from: process.env.MY_EMAIL,
     to: email,
     subject: "Petly verification",
-    text: `Plz confirm your email ${process.env.BASE_URL}/api/auth/verify/${verificationToken}`,
+    text: `Plz confirm your email ${process.env.BASE_URL}${process.env.PORT}/api/auth/verify/${verificationToken}`,
   });
 };
 
 const registerUser = async (body) => {
-    const { password, email, name, cityRegion, phone} = body;
+  const { password, email, name, cityRegion, phone } = body;
   const avatarURL = gravatar.url(email);
   const verificationToken = uuid.v4();
   const user = new User({
     password,
     email,
     name,
-    cityRegion, 
+    cityRegion,
     phone,
     avatarURL,
     verificationToken,
@@ -51,7 +51,8 @@ const registerUser = async (body) => {
 const repeatEmail = async (email) => {
   const user = await User.findOne({ email });
   if (!user) throw new RegistrationConflictError("User doesn't exist");
-  if (user.verify) throw new RegistrationConflictError("Verification has already been passed");
+  if (user.verify)
+    throw new RegistrationConflictError("Verification has already been passed");
   await sendVerification(email, user.verificationToken);
   return;
 };
@@ -86,7 +87,16 @@ const updateUser = async (userId, body) => {
     {
       $set: { name, email, cityRegion, phone, birthday },
     },
-    { new: true, fields: { password: 0, __v: 0, verify:0, verificationToken: 0, avatarURL: 0 } }
+    {
+      new: true,
+      fields: {
+        password: 0,
+        __v: 0,
+        verify: 0,
+        verificationToken: 0,
+        avatarURL: 0,
+      },
+    }
   );
   return result;
 };
