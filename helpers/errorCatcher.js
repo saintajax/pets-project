@@ -1,9 +1,12 @@
-
 const catchWrapper = (controller) => {
-    return (req, res, next) => {
-        controller(req, res).catch(next);
+  return async (req, res, next) => {
+    try {
+      await controller(req, res);
+    } catch (err) {
+      console.log(err);
+      next(err);
     }
-}
-
+  };
+};
 
 module.exports = { catchWrapper };

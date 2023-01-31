@@ -16,15 +16,15 @@ const sendVerification = async (email, verificationToken) => {
     host: process.env.SMTP_HOST,
     port: 465,
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: process.env.MY_EMAIL,
+      pass: process.env.MY_EMAIL_PW,
     },
   });
   await transport.sendMail({
-    from: process.env.EMAIL_FROM,
+    from: process.env.MY_EMAIL,
     to: email,
     subject: "Petly verification",
-    text: `Plz confirm your email ${process.env.AUTH_FRONTEND_URL}verify/${verificationToken}`,
+    text: `Plz confirm your email ${process.env.BASE_URL}/api/auth/verify/${verificationToken}`,
   });
 };
 
@@ -41,6 +41,7 @@ const registerUser = async (body) => {
     avatarURL,
     verificationToken,
   });
+  if (!user) throw new RegistrationConflictError("Email in use");
   const result = await user.save();
   if (!result) throw new RegistrationConflictError("Email in use");
   await sendVerification(email, verificationToken);
@@ -72,10 +73,22 @@ const loginUser = async (password, email) => {
     {
       _id: login._id,
     },
-    process.env.JWT_SECRET
+    process.env.SECRET_KEY
   );
   const user = await User.findOneAndUpdate({ _id: login._id }, { token });
   return { token, user };
+};
+
+const updateUser = async (userId, body) => {
+  const { name, email, phone, cityRegion, birthday } = body;
+  const result = await User.findOneAndUpdate(
+    { _id: userId },
+    {
+      $set: { name, email, cityRegion, phone, birthday },
+    },
+    { new: true, fields: { password: 0, __v: 0, verify:0, verificationToken: 0, avatarURL: 0 } }
+  );
+  return result;
 };
 
 const logoutUser = async (id) => {
@@ -91,6 +104,7 @@ module.exports = {
   loginUser,
   logoutUser,
   getCurrentUser,
+  updateUser,
   verifyUser,
   repeatEmail,
 };
