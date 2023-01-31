@@ -24,7 +24,7 @@ const sendVerification = async (email, verificationToken) => {
     from: process.env.MY_EMAIL,
     to: email,
     subject: "Petly verification",
-    text: `Plz confirm your email ${process.env.BASE_URL}${process.env.PORT}/api/auth/verify/${verificationToken}`,
+    text: `Plz confirm your email ${process.env.BASE_URL}/api/auth/verify/${verificationToken}`,
   });
 };
 
