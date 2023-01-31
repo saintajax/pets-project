@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { NotAutorizedError } = require("../helpers/authErrors");
+const { ValidationError } = require("../helpers/authErrors");
 
 
 const validateBody = (schema) => {
@@ -9,8 +9,7 @@ const validateBody = (schema) => {
       req.body = validated;
       next();
     } catch (err) {
-    //   err.status(400);
-      next(err);
+      next(new ValidationError(err));
     }
   };
 };
