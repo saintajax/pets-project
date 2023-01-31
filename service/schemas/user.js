@@ -23,8 +23,8 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   birthday: {
-    type: Date,
-    default: '00.00.0000',
+    type:Date,
+    default: 0
   },
   verify: {
     type: Boolean,
@@ -60,7 +60,7 @@ const registerSchema = Joi.object({
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{7,32}$")).required(),
   name: Joi.string().alphanum().min(3).max(30).required(),
   cityRegion: Joi.string().pattern(
-    /^([A-Z]{1}[\w-]{1,}[a-z]{1})+\,\s([A-Z]{1}[\w-]{1,}[a-z]{1})$/
+    /^([A-Z]{1}[\w-\s]{1,}[a-z]{1})+\,\s([A-Z]{1}[\w-\s]{1,}[a-z]{1})$/
   ),
   phone: Joi.string().pattern(/^\+380[0-9]{9}$/),
 });
@@ -87,7 +87,7 @@ const updateSchema = Joi.object({
     ),
   name: Joi.string().alphanum().min(3).max(30),
   cityRegion: Joi.string().pattern(
-    /^([A-Z]{1}[\w-]{1,}[a-z]{1})+\,\s([A-Z]{1}[\w-]{1,}[a-z]{1})$/
+    /^([a-zA-Zа-яА-я]{1}[a-zA-Zа-яА-я\w-\s]{1,}[a-zа-я]{1})+\,\s([a-zA-Zа-яА-я]{1}[a-zA-Zа-яА-я\w-\s]{1,}[a-zа-я]{1})$/
   ),
   phone: Joi.string().pattern(/^\+380[0-9]{9}$/),
   birthday: Joi.date()

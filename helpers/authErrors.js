@@ -13,7 +13,7 @@ class MyApiError extends Error {
   class ValidationError extends MyApiError {
     constructor(message) {
       super(message);
-      this.status = 409;
+      this.status = 400;
     }
   }
 
