@@ -54,7 +54,6 @@ const update = async (req, res, next) => {
 
   if (name || email || phone || cityRegion || birthday || avatar) {
     const upContact = await updateUser(req.user._id, req.body, avatar);
-    console.log(upContact);
     if (!upContact) res.status(404).json({ message: "Not found user" });
     res.status(200).json(upContact);
   } else res.status(400).json({ message: "missing fields" });
