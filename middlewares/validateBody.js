@@ -1,4 +1,6 @@
 const Joi = require("joi");
+const { NotAutorizedError } = require("../helpers/authErrors");
+
 
 const validateBody = (schema) => {
   return async (req, res, next) => {
