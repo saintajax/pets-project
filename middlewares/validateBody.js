@@ -1,6 +1,6 @@
+
 const Joi = require("joi");
 const { ValidationError } = require("../helpers/authErrors");
-
 
 const validateBody = (schema) => {
   return async (req, res, next) => {
@@ -9,8 +9,11 @@ const validateBody = (schema) => {
       req.body = validated;
       next();
     } catch (err) {
-      next(new ValidationError(err));
+
     }
+    next();
   };
+
+  return fn;
 };
 module.exports = { validateBody };

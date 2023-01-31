@@ -85,12 +85,13 @@ const loginUser = async (password, email) => {
   return { token, user };
 };
 
-const updateUser = async (userId, body) => {
+const updateUser = async (userId, body, avatarURL) => {
   const { name, email, phone, cityRegion, birthday } = body;
+
   const result = await User.findOneAndUpdate(
     { _id: userId },
     {
-      $set: { name, email, cityRegion, phone, birthday },
+      $set: { name, email, cityRegion, phone, birthday, avatarURL },
     },
     {
       new: true,
@@ -99,7 +100,6 @@ const updateUser = async (userId, body) => {
         __v: 0,
         verify: 0,
         verificationToken: 0,
-        avatarURL: 0,
       },
     }
   );
