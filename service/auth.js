@@ -30,6 +30,8 @@ const sendVerification = async (email, verificationToken) => {
 
 const registerUser = async (body) => {
   const { password, email, name, cityRegion, phone } = body;
+  const dbUser = await User.findOne({ email });
+  if (dbUser) throw new RegistrationConflictError("Email in use");
   const avatarURL = gravatar.url(email);
   const verificationToken = uuid.v4();
   const user = new User({
@@ -41,10 +43,13 @@ const registerUser = async (body) => {
     avatarURL,
     verificationToken,
   });
-  if (!user) throw new RegistrationConflictError("Email in use");
   const result = await user.save();
-  if (!result) throw new RegistrationConflictError("Email in use");
-  await sendVerification(email, verificationToken);
+  try {
+    await sendVerification(email, verificationToken);
+  } catch (err) {
+    console.log(err);
+    return result;
+  }
   return result;
 };
 
