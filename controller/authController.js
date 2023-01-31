@@ -48,9 +48,15 @@ const logout = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   const { name, email, phone, cityRegion, birthday } = req.body;
-  const { path: tempDir } = req.file;
-  const newAvatar = await upload(tempDir);
-  const avatar = newAvatar.secure_url;
+  let avatar = "";
+
+  if (req.file) {
+    const { path: tempDir } = req.file;
+    const newAvatar = await upload(tempDir);
+    avatar = newAvatar.secure_url;
+  } else {
+    avatar = req.user.avatarURL;
+  }
 
   if (name || email || phone || cityRegion || birthday || avatar) {
     const upContact = await updateUser(req.user._id, req.body, avatar);
