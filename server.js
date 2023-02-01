@@ -2,10 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 require("dotenv").config();
 
-const authRouter = require("./api/user");
+const authRouter = require("./api/auth");
+const userRouter = require("./api/user");
 const friendsRouter = require("./api/friends");
 const newsRouter = require("./api/news");
 
@@ -15,7 +18,9 @@ app
   .use(logger("dev"))
   .use(cors())
   .use(express.json())
+  .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
   .use("/api/auth", authRouter)
+  .use("/api/user", userRouter)
   .use("/api/friends", friendsRouter)
   .use("/api/news", newsRouter);
 
