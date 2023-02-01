@@ -23,7 +23,7 @@ const petsSchema = new mongoose.Schema({
       }
   });
 
-  const Pets = mongoose.model('contacts', petsSchema);
+  const Pets = mongoose.model('pets', petsSchema);
 
   module.exports = {
     Pets

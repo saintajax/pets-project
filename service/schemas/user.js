@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: [true, "Enter your name"],
   },
   cityRegion: {
     type: String,
@@ -23,8 +22,8 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   birthday: {
-    type:Date,
-    default: 0
+    type: Date,
+    default: 0,
   },
   verify: {
     type: Boolean,
@@ -34,10 +33,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Verify token is required"],
   },
-  favorite: {
-    type: [mongoose.SchemaTypes.ObjectId],
-    ref: "notice",
-  },
+  favorite: [{ type: mongoose.SchemaTypes.ObjectId, ref: "notice" }],
+  pets: [{ type: mongoose.SchemaTypes.ObjectId, ref: "pets" }],
   token: String,
   avatarURL: String,
 });
@@ -58,11 +55,11 @@ const registerSchema = Joi.object({
     )
     .required(),
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{7,32}$")).required(),
-  name: Joi.string().alphanum().min(3).max(30).required(),
+  name: Joi.string().alphanum().min(3).max(30).message("Enter your name min:3, max:30"),
   cityRegion: Joi.string().pattern(
-    /^([A-Z]{1}[\w-\s]{1,}[a-z]{1})+\,\s([A-Z]{1}[\w-\s]{1,}[a-z]{1})$/
-  ),
-  phone: Joi.string().pattern(/^\+380[0-9]{9}$/),
+    /^([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})+\,\s([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})$/
+  ).message("Enter city, region format: Brovary, Kyiv"),
+  phone: Joi.string().pattern(/^\+380[0-9]{9}$/).message("Enter phone number format: +380xxxxxxxxx"),
 });
 
 const loginSchema = Joi.object({
@@ -85,15 +82,12 @@ const updateSchema = Joi.object({
     .pattern(
       /^([a-zA-Z0-9]{1}[\w-\.]{0,}[a-zA-Z0-9]{1})+@([\w-]+\.)+[\w-]{2,4}$/
     ),
-  name: Joi.string().alphanum().min(3).max(30),
+  name: Joi.string().alphanum().min(3).max(30).message("Enter your name min:3, max:30"),
   cityRegion: Joi.string().pattern(
-    /^([a-zA-Zа-яА-я]{1}[a-zA-Zа-яА-я\w-\s]{1,}[a-zа-я]{1})+\,\s([a-zA-Zа-яА-я]{1}[a-zA-Zа-яА-я\w-\s]{1,}[a-zа-я]{1})$/
-  ),
-  phone: Joi.string().pattern(/^\+380[0-9]{9}$/),
-  birthday: Joi.date()
-    // .format("DD.MM.YYYY") // set desired date format here
-    // .raw()
-    // .error(() => "Error date format DD.MM.YYYY"),
+    /^([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})+\,\s([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})$/
+  ).message("Enter city, region format: Brovary, Kyiv"),
+  phone: Joi.string().pattern(/^\+380[0-9]{9}$/).message("Enter phone number format: +380xxxxxxxxx"),
+  birthday: Joi.date(),
 });
 
 module.exports = {
