@@ -27,8 +27,10 @@ const addNewPet = async (owner, body) => {
     owner,
     photoURL,
   });
-  const {_id} = await newPet.save();
-  const result = await User.findByIdAndUpdate({_id:owner},{$push: { pets: _id }});
+   
+  const result = await newPet.save();
+  const {_id} = result;
+  await User.findByIdAndUpdate({_id:owner},{$push: { pets: _id }});
   return result;
 };
 

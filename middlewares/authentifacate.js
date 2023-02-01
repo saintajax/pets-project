@@ -13,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
       next(new NotAutorizedError("Not authorized"));
     }
     const tokenUser = jwt.decode(token, process.env.SECRET_KEY);
-    if (!tokenUser._id) {
+    if (!tokenUser) {
       next(new NotAutorizedError("Not authorized"));
     }
     const dbUser = await User.findById(tokenUser._id);
