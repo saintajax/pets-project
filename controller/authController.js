@@ -6,6 +6,7 @@ const {
   getCurrentUser,
   verifyUser,
   repeatEmail,
+  refreshTokenForUser,
 } = require("../service/auth");
 const upload = require("../helpers/cloudinary");
 
@@ -31,18 +32,20 @@ const login = async (req, res, next) => {
   const { password, email } = req.body;
   const result = await loginUser(password, email);
   const {
-    token,
+    accessToken,
+    refreshToken,
     user: { name, cityRegion, phone, favorite, avatarURL },
   } = result;
   res.status(200).json({
-    token,
+    accessToken,
+    refreshToken,
     user: { email, name, cityRegion, phone, favorite, avatarURL },
   });
 };
 
 const logout = async (req, res, next) => {
-  const { user } = req;
-  await logoutUser(user._id);
+  const { refreshToken } = req.body;
+  await logoutUser(refreshToken);
   res.status(204).json({ message: "Logged out" });
 };
 
@@ -72,6 +75,15 @@ const getCurrent = async (req, res, next) => {
   res.status(200).json({ email, name, cityRegion, phone, favorite, avatarURL });
 };
 
+const refreshTokens = async (req, res, next) => {
+  const { refreshToken: refreshTokenOld } = req.body;
+  const { accessToken, refreshToken } = await refreshTokenForUser(
+    refreshTokenOld
+  );
+
+  res.status(200).json({ accessToken, refreshToken }).end();
+};
+
 module.exports = {
   register,
   login,
@@ -80,4 +92,5 @@ module.exports = {
   getCurrent,
   verifyEmailController,
   repeatEmailController,
+  refreshTokens,
 };

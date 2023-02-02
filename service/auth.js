@@ -10,6 +10,7 @@ const gravatar = require("gravatar");
 require("dotenv").config();
 const nodemailer = require("nodemailer");
 const uuid = require("uuid");
+const { RefreshTokens } = require("./schemas/refreshToken");
 
 const sendVerification = async (email, verificationToken) => {
   const transport = nodemailer.createTransport({
@@ -79,10 +80,23 @@ const loginUser = async (password, email) => {
     {
       _id: login._id,
     },
-    process.env.SECRET_KEY
+    process.env.SECRET_KEY,
+    {
+      expiresIn: 5 * 24 * 60 * 60,
+    }
   );
-  const user = await User.findOneAndUpdate({ _id: login._id }, { token });
-  return { token, user };
+  const refreshToken = new RefreshTokens({
+    refreshToken: uuid.v4(),
+    expiresIn: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+    userId: login._id,
+  });
+  const refreshTokens = await refreshToken.save();
+  // const user = await User.findOneAndUpdate({ _id: login._id }, { token });
+  return {
+    accessToken: token,
+    refreshToken: refreshTokens.refreshToken,
+    user: login,
+  };
 };
 
 const updateUser = async (userId, body, avatarURL) => {
@@ -106,12 +120,41 @@ const updateUser = async (userId, body, avatarURL) => {
   return result;
 };
 
-const logoutUser = async (id) => {
-  await User.findOneAndUpdate({ _id: id }, { token: null });
+const logoutUser = async (refreshToken) => {
+  await RefreshTokens.findOneAndRemove({ refreshToken });
   return;
 };
 const getCurrentUser = async (id) => {
   return await User.findOne({ _id: id });
+};
+
+const refreshTokenForUser = async (refreshTokenOld) => {
+  const token = await RefreshTokens.findOne({ refreshToken: refreshTokenOld });
+  if (!token) {
+    throw new NotAutorizedError("Not authorized");
+  }
+  if (token.expiresIn < Date.now()) {
+    await RefreshTokens.findOneAndDelete({ _id: token._id });
+    throw new NotAutorizedError("Not authorized");
+  }
+  const newRefreshToken = await RefreshTokens.findOneAndUpdate(
+    { _id: token._id },
+    {
+      refreshToken: uuid.v4(),
+      expiresIn: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+    },
+    { new: true }
+  );
+  const accessToken = await jwt.sign(
+    {
+      _id: token.userId,
+    },
+    process.env.SECRET_KEY,
+    {
+      expiresIn: 5 * 24 * 60 * 60,
+    }
+  );
+  return { refreshToken: newRefreshToken.refreshToken, accessToken };
 };
 
 module.exports = {
@@ -122,4 +165,5 @@ module.exports = {
   updateUser,
   verifyUser,
   repeatEmail,
+  refreshTokenForUser,
 };
