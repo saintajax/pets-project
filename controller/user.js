@@ -1,6 +1,6 @@
 const { User } = require("../service/schemas/user");
 const { NotAutorizedError } = require("../helpers/authErrors");
-
+const { updateUser } = require("../service/auth");
 const {
   findUser,
   getUserInfo,
