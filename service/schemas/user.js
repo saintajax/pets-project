@@ -23,8 +23,8 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   birthday: {
-    type:Date,
-    default: 0
+    type: Date,
+    default: 0,
   },
   verify: {
     type: Boolean,
@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     type: [mongoose.SchemaTypes.ObjectId],
     ref: "notice",
   },
-  token: String,
+  // token: String,
   avatarURL: String,
 });
 userSchema.pre("save", async function () {
@@ -90,15 +90,20 @@ const updateSchema = Joi.object({
     /^([a-zA-Zа-яА-я]{1}[a-zA-Zа-яА-я\w-\s]{1,}[a-zа-я]{1})+\,\s([a-zA-Zа-яА-я]{1}[a-zA-Zа-яА-я\w-\s]{1,}[a-zа-я]{1})$/
   ),
   phone: Joi.string().pattern(/^\+380[0-9]{9}$/),
-  birthday: Joi.date()
-    // .format("DD.MM.YYYY") // set desired date format here
-    // .raw()
-    // .error(() => "Error date format DD.MM.YYYY"),
+  birthday: Joi.date(),
+  // .format("DD.MM.YYYY") // set desired date format here
+  // .raw()
+  // .error(() => "Error date format DD.MM.YYYY"),
 });
+
+const refreshTokenSchema = Joi.object({
+  refreshToken: Joi.string().required(),
+}).required();
 
 module.exports = {
   User,
   registerSchema,
   loginSchema,
   updateSchema,
+  refreshTokenSchema,
 };
