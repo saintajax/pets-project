@@ -33,9 +33,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Verify token is required"],
   },
-  favorite: [{ type: mongoose.SchemaTypes.ObjectId, ref: "notice" }],
   pets: [{ type: mongoose.SchemaTypes.ObjectId, ref: "pets" }],
-  token: String,
+  favorite: {
+    type: [mongoose.SchemaTypes.ObjectId],
+    ref: "notice",
+  },
+  // token: String,
+
   avatarURL: String,
 });
 userSchema.pre("save", async function () {
@@ -88,11 +92,17 @@ const updateSchema = Joi.object({
   ).message("Enter city, region format: Brovary, Kyiv"),
   phone: Joi.string().pattern(/^\+380[0-9]{9}$/).message("Enter phone number format: +380xxxxxxxxx"),
   birthday: Joi.date(),
+
 });
+
+const refreshTokenSchema = Joi.object({
+  refreshToken: Joi.string().required(),
+}).required();
 
 module.exports = {
   User,
   registerSchema,
   loginSchema,
   updateSchema,
+  refreshTokenSchema,
 };
