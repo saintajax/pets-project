@@ -34,12 +34,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "Verify token is required"],
   },
   pets: [{ type: mongoose.SchemaTypes.ObjectId, ref: "pets" }],
-  favorite: {
-    type: [mongoose.SchemaTypes.ObjectId],
-    ref: "notice",
-  },
+  favorite: [
+    { type: mongoose.SchemaTypes.ObjectId, ref: "notice", default: [] },
+  ],
   // token: String,
-
   avatarURL: String,
 });
 userSchema.pre("save", async function () {
@@ -59,11 +57,19 @@ const registerSchema = Joi.object({
     )
     .required(),
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{7,32}$")).required(),
-  name: Joi.string().alphanum().min(3).max(30).message("Enter your name min:3, max:30"),
-  cityRegion: Joi.string().pattern(
-    /^([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})+\,\s([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})$/
-  ).message("Enter city, region format: Brovary, Kyiv"),
-  phone: Joi.string().pattern(/^\+380[0-9]{9}$/).message("Enter phone number format: +380xxxxxxxxx"),
+  name: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .message("Enter your name min:3, max:30"),
+  cityRegion: Joi.string()
+    .pattern(
+      /^([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})+\,\s([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})$/
+    )
+    .message("Enter city, region format: Brovary, Kyiv"),
+  phone: Joi.string()
+    .pattern(/^\+380[0-9]{9}$/)
+    .message("Enter phone number format: +380xxxxxxxxx"),
 });
 
 const loginSchema = Joi.object({
@@ -86,13 +92,20 @@ const updateSchema = Joi.object({
     .pattern(
       /^([a-zA-Z0-9]{1}[\w-\.]{0,}[a-zA-Z0-9]{1})+@([\w-]+\.)+[\w-]{2,4}$/
     ),
-  name: Joi.string().alphanum().min(3).max(30).message("Enter your name min:3, max:30"),
-  cityRegion: Joi.string().pattern(
-    /^([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})+\,\s([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})$/
-  ).message("Enter city, region format: Brovary, Kyiv"),
-  phone: Joi.string().pattern(/^\+380[0-9]{9}$/).message("Enter phone number format: +380xxxxxxxxx"),
+  name: Joi.string()
+    .alphanum()
+    .min(3)
+    .max(30)
+    .message("Enter your name min:3, max:30"),
+  cityRegion: Joi.string()
+    .pattern(
+      /^([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})+\,\s([a-zA-Zа-яА-яіїєґЇІЄҐ]{1}[a-zA-Zа-яА-яіїєґЇІЄҐ\w-\s]{1,}[a-zа-яіїєґЇІЄҐ]{1})$/
+    )
+    .message("Enter city, region format: Brovary, Kyiv"),
+  phone: Joi.string()
+    .pattern(/^\+380[0-9]{9}$/)
+    .message("Enter phone number format: +380xxxxxxxxx"),
   birthday: Joi.date(),
-
 });
 
 const refreshTokenSchema = Joi.object({

@@ -1,7 +1,7 @@
 const { Schema, SchemaTypes, model } = require("mongoose");
 const Joi = require("joi");
 const gravatar = require("gravatar");
-const handleSaveErrors = require("../helpers");
+const handleSaveErrors = require("../../helpers/handleSaveErr");
 
 const birthdayRegexp =
   /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/;
@@ -89,6 +89,10 @@ const noticesSchema = Joi.object({
   birthday: Joi.string().pattern(new RegExp(birthdayRegexp)),
 });
 
+const updateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean(),
+});
+
 noticeSchema.methods.setAvatar = function (email) {
   this.avatarUrl = gravatar.url(email);
 };
@@ -97,5 +101,5 @@ const Notice = model("notice", noticeSchema);
 
 noticeSchema.post("save", handleSaveErrors);
 
-const schemas = { noticesSchema };
+const schemas = { noticesSchema, updateFavoriteSchema };
 module.exports = { schemas, Notice };
