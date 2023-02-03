@@ -7,6 +7,7 @@ const {
   addNewPet,
   deleteNewPet,
 } = require("../service/user");
+const upload = require("../middlewares/upload");
 
 const getCurrent = async (req, res) => {
   const { email } = req.user;
