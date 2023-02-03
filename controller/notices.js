@@ -31,7 +31,7 @@ const getNoticeById = async (req, res) => {
 
 const addNotice = async (req, res) => {
   try {
-    const { file } = req?.file;
+    const user = req.user;
     const {
       title,
       name,
@@ -43,45 +43,30 @@ const addNotice = async (req, res) => {
       comments,
       category,
     } = req.body;
-    const { user } = req.user;
-    if (!file) {
-      const notices = new Notice({
-        title,
-        name,
-        birthday,
-        breed,
-        sex,
-        location,
-        price,
-        comments,
-        category,
-        owner: user._id,
-      });
-      await notices.save();
-      res.json({ status: "created", code: 201, data: { notices } }).end();
-      return;
-    }
-    if (file) {
+
+    if (req.file) {
       const { path: tempDir } = req.file;
-      const newAvatar = await upload(tempDir);
-      const photo = newAvatar.secure_url;
-      const notices = new Notice({
-        title,
-        name,
-        birthday,
-        breed,
-        sex,
-        location,
-        price,
-        comments,
-        category,
-        avatarUrl:photo,
-        owner: user._id,
-      });
-      await notices.save();
-      res.json({ status: "created", code: 201, data: { notices } }).end();
-      return;
+      const newPhoto = await upload(tempDir);
+      avatar = newPhoto.secure_url;
+    } else {
+      avatar = req.user.avatarURL;
     }
+
+    const notice = new Notice({
+      title,
+      name,
+      birthday,
+      breed,
+      sex,
+      location,
+      price,
+      comments,
+      category,
+      avatarUrl: avatar,
+      owner: user._id,
+    });
+    await notice.save();
+    res.json({ status: "created", code: 201, data: { notice } }).end();
   } catch (error) {
     res.status(500).json({ message: "Something wrong in db: " + error });
   }

@@ -56,11 +56,12 @@ const noticeSchema = new Schema(
       type: String,
       minlength: 5,
       maxlength: 120,
-      default: "",
+      default: "no comment",
     },
     birthday: {
       type: Date,
       maxlength: 10,
+      default: "01.01.2000",
       required: [true, "Please, set a birthday date"],
     },
   },
@@ -85,7 +86,7 @@ const noticesSchema = Joi.object({
   }),
   avatarUrl: Joi.string(),
   comments: Joi.string().min(5).max(120),
-  birthday: Joi.string().pattern(new RegExp(birthdayRegexp)),
+  birthday: Joi.string().pattern(new RegExp(birthdayRegexp)).required(),
 });
 
 const updateFavoriteSchema = Joi.object({
