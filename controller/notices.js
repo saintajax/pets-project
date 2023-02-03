@@ -1,6 +1,91 @@
 const { User } = require("../service/schemas/user");
 const { Notice } = require("../service/schemas/notice");
 const HttpError = require("../helpers/httpErrors");
+const upload = require("../middlewares/upload");
+
+const getAllNotices = async (req, res) => {
+  try {
+    const { category = "sell", q = "", page = 1, limit = 8 } = req.query;
+    const filter = { title: { $regex: q, $options: "i" }, category };
+    const notices = await Notice.find(filter)
+      .sort({ _id: -1 })
+      .skip((page - 1) * limit);
+    const totalCount = await Notice.find(filter).count();
+    res
+      .json({ status: "success", code: 200, data: { notices, totalCount } })
+      .end();
+  } catch (error) {
+    res.status(500).json({ message: "Something wrong in db" + error });
+  }
+};
+
+const getNoticeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const notices = await Notice.find({ _id: id });
+    res.json({ status: "success", code: 200, data: notices }).end();
+  } catch (error) {
+    res.status(500).json({ message: "Something wrong in db" + error });
+  }
+};
+
+const addNotice = async (req, res) => {
+  try {
+    const { file } = req?.file;
+    const {
+      title,
+      name,
+      birthday,
+      breed,
+      sex,
+      location,
+      price,
+      comments,
+      category,
+    } = req.body;
+    const { user } = req.user;
+    if (!file) {
+      const notices = new Notice({
+        title,
+        name,
+        birthday,
+        breed,
+        sex,
+        location,
+        price,
+        comments,
+        category,
+        owner: user._id,
+      });
+      await notices.save();
+      res.json({ status: "created", code: 201, data: { notices } }).end();
+      return;
+    }
+    if (file) {
+      const { path: tempDir } = req.file;
+      const newAvatar = await upload(tempDir);
+      const photo = newAvatar.secure_url;
+      const notices = new Notice({
+        title,
+        name,
+        birthday,
+        breed,
+        sex,
+        location,
+        price,
+        comments,
+        category,
+        avatarUrl:photo,
+        owner: user._id,
+      });
+      await notices.save();
+      res.json({ status: "created", code: 201, data: { notices } }).end();
+      return;
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Something wrong in db: " + error });
+  }
+};
 
 const updateFavorites = async (req, res, next) => {
   const { id } = req.user;
@@ -94,4 +179,11 @@ const deleteFavorites = async (req, res, next) => {
   });
 };
 
-module.exports = { updateFavorites, deleteFavorites, getOwnFavoriteNotices };
+module.exports = {
+  updateFavorites,
+  deleteFavorites,
+  getOwnFavoriteNotices,
+  getAllNotices,
+  getNoticeById,
+  addNotice,
+};

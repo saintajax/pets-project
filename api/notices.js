@@ -6,26 +6,19 @@ const {
   getOwnFavoriteNotices,
   updateFavorites,
   deleteFavorites,
+  getAllNotices,
+  getNoticeById,
+  addNotice,
 } = require("../controller/notices");
+const upload = require("../middlewares/upload");
 
 const router = express.Router();
+router.get("/", authMiddleware, catchWrapper(getAllNotices));
+router.get("/favorite", authMiddleware, catchWrapper(getOwnFavoriteNotices));
+router.get("/:id", catchWrapper(getNoticeById));
+router.post("/addnotice", authMiddleware, upload.single("noticePhoto"),catchWrapper(addNotice));
+router.patch("/:id/favorites", authMiddleware, catchWrapper(updateFavorites));
 
-router.get(
-  "/user/favorite",
-  authMiddleware,
-  catchWrapper(getOwnFavoriteNotices)
-);
-
-router.patch(
-  "/user/:id/favorites",
-  authMiddleware,
-  catchWrapper(updateFavorites)
-);
-
-router.delete(
-  "/user/:id/favorites",
-  authMiddleware,
-  catchWrapper(deleteFavorites)
-);
+router.delete("/:id/favorites", authMiddleware, catchWrapper(deleteFavorites));
 
 module.exports = router;
