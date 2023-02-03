@@ -17,8 +17,8 @@ const getUserInfo = async (id) => {
 };
 
 const addNewPet = async (owner, body) => {
-  const { name, dateOfBirth, breed, comments } = body;
-  const photoURL = gravatar.url(name);
+  const { name, dateOfBirth, breed, comments, photoURL } = body;
+  if (!photoURL) photoURL = gravatar.url(name);
   const newPet = new Pets({
     name,
     dateOfBirth,
