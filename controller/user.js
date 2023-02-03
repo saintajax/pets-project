@@ -7,7 +7,7 @@ const {
   addNewPet,
   deleteNewPet,
 } = require("../service/user");
-const upload = require("../middlewares/upload");
+const upload = require("../helpers/cloudinary");
 
 const getCurrent = async (req, res) => {
   const { email } = req.user;
