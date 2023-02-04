@@ -23,7 +23,15 @@ const validateBody = (schema) => {
       req.body = validated;
       next();
     } catch (err) {
-      next(new ValidationError(err));
+      next(
+        new ValidationError(
+          err.message,
+          err.details.reduce(
+            (acc, { message, path: [path] }) => ({ ...acc, [path]: message }),
+            {}
+          )
+        )
+      );
     }
   };
 };
