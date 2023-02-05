@@ -73,7 +73,9 @@ const verifyUser = async (verificationToken) => {
 };
 
 const loginUser = async (password, email) => {
-  const login = await User.findOne({ email, verify: true });
+  const login = await User.findOne({ email, verify: true })
+    .populate("favorite")
+    .populate("pets");
   if (!login || !(await bcrypt.compare(password, login.password)))
     throw new NotAutorizedError("Email or password is wrong");
   const token = await jwt.sign(

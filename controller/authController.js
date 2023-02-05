@@ -34,12 +34,12 @@ const login = async (req, res, next) => {
   const {
     accessToken,
     refreshToken,
-    user: { name, cityRegion, phone, favorite, avatarURL, birthday },
+    user: { _id, name, cityRegion, phone, favorite, pets , avatarURL, birthday },
   } = result;
   res.status(200).json({
     accessToken,
     refreshToken,
-    user: { email, name, cityRegion, phone, favorite, avatarURL, birthday },
+    user: { _id, email, name, cityRegion, phone, favorite, pets, avatarURL, birthday },
   });
 };
 
