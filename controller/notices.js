@@ -6,7 +6,7 @@ const upload = require("../middlewares/upload");
 const getAllNotices = async (req, res) => {
   try {
     const { category = "sell", q = "", page = 1, limit = 8 } = req.query;
-    const filter = { title: { $regex: q, $options: "i" }, category };
+    const filter = { title: { $regex: q, $options: "i" }, category: category };
     const notices = await Notice.find(filter)
       .sort({ _id: -1 })
       .skip((page - 1) * limit);
