@@ -662,7 +662,7 @@
           "required": true,
           "description": "Update pets information about the user",
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/AddPetRequest"
               }
@@ -1917,9 +1917,9 @@
             "type": "String",
             "example": "Good dog"
           },
-          "photoURL": {
-            "type": "String",
-            "example": "www.gravatar.com/avatar/962b2d2b8e72dc6771bca613d49b46fb"
+          "petsPhoto": {
+            "type": "File"
+            
           }
         }
       },

@@ -1,5 +1,8 @@
 const { User } = require("../service/schemas/user");
 const { NotAutorizedError } = require("../helpers/authErrors");
+const gravatar = require("gravatar");
+
+
 const { updateUser } = require("../service/auth");
 const {
   findUser,
@@ -21,7 +24,7 @@ const getCurrent = async (req, res) => {
   });
 };
 
-const getInfo = async (req, res, next) => {
+const getInfo = async (req, res) => {
   if (!req.user) throw new NotAutorizedError("Not Autorized");
   const { _id } = req.user;
   const { user } = await getUserInfo(_id);
@@ -34,8 +37,16 @@ const getInfo = async (req, res, next) => {
   });
 };
 
-const addPet = async (req, res, next) => {
-  const pet = await addNewPet(req.user._id, req.body);
+const addPet = async (req, res) => {
+  let avatar = "";
+  if (req.files) {
+    const { path: tempDir } = req.files[0];
+    const newAvatar = await upload(tempDir);
+    avatar = newAvatar.secure_url;
+  } else {
+    avatar = gravatar.url(req.body.name);
+  }
+  const pet = await addNewPet(req.user._id, req.body, avatar);
   res.status(200).json({
     status: "success",
     code: 200,
@@ -45,7 +56,7 @@ const addPet = async (req, res, next) => {
   });
 };
 
-const deletePet = async (req, res, next) => {
+const deletePet = async (req, res) => {
   const deletedPet = await deleteNewPet(req.user._id, req.params.petId);
   if (deletedPet)
     res.status(200).json({
