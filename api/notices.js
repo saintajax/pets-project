@@ -14,7 +14,7 @@ const {
 const upload = require("../middlewares/upload");
 
 const router = express.Router();
-router.get("/", authMiddleware, catchWrapper(getAllNotices));
+router.get("/", catchWrapper(getAllNotices));
 router.get("/favorite", authMiddleware, catchWrapper(getOwnFavoriteNotices));
 router.get("/:id", catchWrapper(getNoticeById));
 router.post(
