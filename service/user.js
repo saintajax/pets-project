@@ -1,6 +1,6 @@
 const { User } = require("./schemas/user");
 const { Pets } = require("./schemas/pets");
-const gravatar = require("gravatar");
+// const gravatar = require("gravatar");
 
 const findUser = async (email) => {
   const user = await User.findOne({ email }, { password: 0 })
@@ -19,17 +19,16 @@ const getUserInfo = async (id) => {
   return { user };
 };
 
-const addNewPet = async (owner, body) => {
-  const { name, dateOfBirth, breed, comments, photoURL } = body;
-  let photo = photoURL;
-  if (!photo) photo = gravatar.url(name);
+const addNewPet = async (owner, body, avatar) => {
+  const { name, dateOfBirth, breed, comments } = body;
+ 
   const newPet = new Pets({
     name,
     dateOfBirth,
     breed,
     comments,
     owner,
-    photoURL: photo,
+    photoURL: avatar,
   });
 
   const result = await newPet.save();

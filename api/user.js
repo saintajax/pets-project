@@ -6,13 +6,12 @@ const { catchWrapper } = require("../helpers/errorCatcher");
 const { updateSchema } = require("../service/schemas/user");
 const { petSchema } = require("../service/schemas/pets");
 
-
 const {
   update,
   getCurrent,
   getInfo,
   addPet,
-  deletePet
+  deletePet,
 } = require("../controller/user");
 
 const router = express.Router();
@@ -26,9 +25,13 @@ router.patch(
 );
 router.get("/current", authMiddleware, catchWrapper(getCurrent));
 router.get("/info", authMiddleware, catchWrapper(getInfo));
-router.post("/pets/add", authMiddleware,validateBody(petSchema), catchWrapper(addPet));
+router.post(
+  "/pets/add",
+  authMiddleware,
+  upload.any(),
+  validateBody(petSchema),
+  catchWrapper(addPet)
+);
 router.patch("/pets/delete/:petId", authMiddleware, catchWrapper(deletePet));
-
-
 
 module.exports = router;
