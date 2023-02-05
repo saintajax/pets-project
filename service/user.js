@@ -18,14 +18,15 @@ const getUserInfo = async (id) => {
 
 const addNewPet = async (owner, body) => {
   const { name, dateOfBirth, breed, comments, photoURL } = body;
-  if (!photoURL) photoURL = gravatar.url(name);
+  let photo = photoURL;
+  if (!photo) photo = gravatar.url(name);
   const newPet = new Pets({
     name,
     dateOfBirth,
     breed,
     comments,
     owner,
-    photoURL,
+    photoURL: photo
   });
    
   const result = await newPet.save();
@@ -36,6 +37,7 @@ const addNewPet = async (owner, body) => {
 
 const deleteNewPet = async (owner, petId) => {
   await Pets.deleteOne({ _id: petId, owner });
+  await User.findByIdAndUpdate({_id: owner},{ $pull: {pets: petId}})
   return petId;
 };
 

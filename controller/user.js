@@ -49,7 +49,7 @@ const deletePet = async (req, res, next) => {
   const deletedPet = await deleteNewPet(req.user._id, req.params.petId);
   if (deletedPet)
     res.status(200).json({
-      status: "fail",
+      status: "success",
       code: 200,
       data: deletedPet,
       message: "Pet deteted",
