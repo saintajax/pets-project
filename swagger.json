@@ -841,6 +841,10 @@
           "user": {
             "type": "object",
             "properties": {
+              "_id": {
+                "type": "String",
+                "example": "78b5b82ffe500173aca6defb"
+              },
               "email": {
                 "type": "String",
                 "format": "email",
@@ -865,7 +869,97 @@
               "favorite": {
                 "type": "array",
                 "items": {
-                  "example": "63b5b82ffe500173aca6defb"
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "String",
+                      "example": "63a633f7790ca3934876ab29"
+                    },
+                    "category": {
+                      "type": "String",
+                      "example": "John"
+                    },
+                    "title": {
+                      "type": "String",
+                      "example": "New notice"
+                    },
+                    "breed": {
+                      "type": "String",
+                      "example": "Labrador"
+                    },
+                    "name": {
+                      "type": "String",
+                      "example": "Lessy"
+                    },
+                    "location": {
+                      "type": "String",
+                      "example": "Kyiv"
+                    },
+                    "sex": {
+                      "type": "String",
+                      "example": "female"
+                    },
+                    "price": {
+                      "type": "Number",
+                      "example": 1000
+                    },
+                    "owner": {
+                      "type": "String",
+                      "example": "63b89f63a2f28a3f4e4f6597"
+                    },
+                    "avatarURL": {
+                      "type": "String",
+                      "example": "https://res.cloudinary.com/dhfk2xkow/image/upload/v1672264113/3700_6_10_ckne9o.jpg"
+                    },
+                    "comments": {
+                      "type": "String",
+                      "example": "good pet"
+                    },
+                    "birthday": {
+                      "type": "Date",
+                      "example": "1999-12-31T22:00:00.000Z"
+                    },
+                    "createdAt": {
+                      "type": "Date",
+                      "example": "1999-12-31T22:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "Date",
+                      "example": "1999-12-31T22:00:00.000Z"
+                    }
+                  }
+                }
+              },
+              "pets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "String",
+                      "example": "63a633f7790ca3934876ab29"
+                    },
+                    "name": {
+                      "type": "String",
+                      "example": "John Doe"
+                    },
+                    "dateOfBirth": {
+                      "type": "Date",
+                      "example": "21-10-2020"
+                    },
+                    "breed": {
+                      "type": "String",
+                      "example": "Labrador"
+                    },
+                    "photoURL": {
+                      "type": "String",
+                      "example": "//www.gravatar.com/avatar/6867d7469076bdce33bc75fee20918eb"
+                    },
+                    "owner": {
+                      "type": "String",
+                      "example": "63a633f7790ca3934876ab29"
+                    }
+                  }
                 }
               }
             }
@@ -1401,122 +1495,7 @@
           }
         }
       },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "Number",
-            "example": 200
-          },
-          "status": {
-            "type": "String",
-            "example": "success"
-          },
-          "data": {
-            "type": "Array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "_id": {
-                  "type": "String",
-                  "example": "63b89f63a2f28a3f4e4f6597"
-                },
-                "category": {
-                  "type": "String",
-                  "example": "sell"
-                },
-                "title": {
-                  "type": "String",
-                  "example": "Selling a dog"
-                },
-                "breed": {
-                  "type": "String",
-                  "example": "dog"
-                },
-                "name": {
-                  "type": "String",
-                  "example": "Tom"
-                },
-                "location": {
-                  "type": "String",
-                  "example": "Kyiv"
-                },
-                "sex": {
-                  "type": "String",
-                  "example": "male"
-                },
-                "price": {
-                  "type": "Number",
-                  "example": 100
-                },
-                "owner": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "String",
-                      "example": "63b8a123e29fb9ca523b1d6d"
-                    },
-                    "email": {
-                      "type": "String",
-                      "example": "alex@gmail.com"
-                    }
-                  }
-                },
-                "avatarURL": {
-                  "type": "String",
-                  "example": "https://res.cloudinary.com/dhfk2xkow/image/upload/v1672264113/3700_6_10_ckne9o.jpg"
-                },
-                "comments": {
-                  "type": "String",
-                  "example": "good pet"
-                },
-                "birthday": {
-                  "type": "String",
-                  "example": "00.00.0000"
-                },
-                "cloudId": {
-                  "type": "String",
-                  "example": "avatars/pqys0k4rpbrlkrliywpw"
-                },
-                "createdAt": {
-                  "type": "String",
-                  "example": "2023-01-07T11:49:18.273Z"
-                },
-                "updatedAt": {
-                  "type": "String",
-                  "example": "2023-01-07T11:49:18.273Z"
-                }
-              }
-            }
-          }
-        },
-        "example": {
-          "code": 200,
-          "status": "success",
-          "data": [
-            {
-              "_id": "63b95c3ecb15809010a54f0d",
-              "category": "sell",
-              "title": "Selling a dog",
-              "breed": "dog",
-              "name": "Tom",
-              "location": "Kyiv",
-              "sex": "male",
-              "price": 100,
-              "owner": {
-                "_id": "63b8a123e29fb9ca523b1d6d",
-                "email": "alex@gmail.com"
-              },
-              "avatarURL": "https://res.cloudinary.com/dhfk2xkow/image/upload/v1672264113/3700_6_10_ckne9o.jpg",
-              "comments": "good pet",
-              "birthday": "00.00.0000",
-              "cloudId": "avatars/pqys0k4rpbrlkrliywpw",
-              "createdAt": "2023-01-07T11:49:18.273Z",
-              "updatedAt": "2023-01-07T11:49:18.273Z"
-            }
-          ]
-        }
-      },
+      
       "UpdateUserRequest": {
         "type": "object",
         "properties": {
@@ -1644,7 +1623,15 @@
                         },
                         "birthday": {
                           "type": "Date",
-                          "example": "00.00.0000"
+                          "example": "1999-12-31T22:00:00.000Z"
+                        },
+                        "createdAt": {
+                          "type": "Date",
+                          "example": "1999-12-31T22:00:00.000Z"
+                        },
+                        "updatedAt": {
+                          "type": "Date",
+                          "example": "1999-12-31T22:00:00.000Z"
                         }
                       }
                     }
@@ -1793,11 +1780,15 @@
                         },
                         "birthday": {
                           "type": "Date",
-                          "example": "00.00.0000"
+                          "example": "1999-12-31T22:00:00.000Z"
                         },
-                        "__v": {
-                          "type": "Number",
-                          "example": 0
+                        "createdAt": {
+                          "type": "Date",
+                          "example": "1999-12-31T22:00:00.000Z"
+                        },
+                        "updatedAt": {
+                          "type": "Date",
+                          "example": "1999-12-31T22:00:00.000Z"
                         }
                       }
                     }
@@ -1817,7 +1808,7 @@
                         },
                         "dateOfBirth": {
                           "type": "Date",
-                          "example": "21-10-2020"
+                          "example": "1999-12-31T22:00:00.000Z"
                         },
                         "breed": {
                           "type": "String",
