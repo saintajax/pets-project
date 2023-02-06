@@ -32,6 +32,6 @@ router.post(
   validateBody(petSchema),
   catchWrapper(addPet)
 );
-router.patch("/pets/delete/:petId", authMiddleware, catchWrapper(deletePet));
+router.delete("/pets/delete/:petId", authMiddleware, catchWrapper(deletePet));
 
 module.exports = router;

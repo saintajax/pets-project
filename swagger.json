@@ -609,7 +609,7 @@
       }
     },
     "/user/pets/delete/{petId}": {
-      "patch": {
+      "delete": {
         "tags": ["User"],
         "summary": "Delete pet from user",
         "description": "Delete pet from user",
