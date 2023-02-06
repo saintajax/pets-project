@@ -47,7 +47,7 @@ const noticeSchema = new Schema(
     },
     owner: {
       type: SchemaTypes.ObjectId,
-      ref: "user",
+      ref: "users",
     },
     avatarUrl: {
       type: String,
