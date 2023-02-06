@@ -9,7 +9,12 @@
   "produces": ["application/json", "multipart/form-data"],
   "servers": [
     {
-      "url": "https://pet-ly.onrender.com/api"
+      "url": "https://pet-ly.onrender.com/api",
+      "description": "Deploy server"
+    },
+    {
+      "url": "http://localhost:3001/api",
+      "description": "Development server"
     }
   ],
   "tags": [
