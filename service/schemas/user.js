@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   birthday: {
-    type: Date,
-    default: 0,
+    type: String,
+    default: "00.00.0000",
   },
   verify: {
     type: Boolean,
@@ -105,7 +105,7 @@ const updateSchema = Joi.object({
   phone: Joi.string()
     .pattern(/^\+380[0-9]{9}$/)
     .message("Enter phone number format: +380xxxxxxxxx"),
-  birthday: Joi.date(),
+  birthday: Joi.string(),
 });
 
 const refreshTokenSchema = Joi.object({

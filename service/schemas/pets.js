@@ -7,7 +7,7 @@ const petsSchema = new mongoose.Schema({
     required: [true, "Set name for your pet"],
   },
   dateOfBirth: {
-    type: Date,
+    type: String,
     required: [true, "Set date of birth of your pet"],
   },
   breed: {
@@ -38,7 +38,7 @@ const petSchema = Joi.object({
     .max(16)
     .pattern(/^[a-zA-Zа-яА-яіїєґЇІЄҐ]{2,16}$/)
     .required(),
-  dateOfBirth: Joi.date().required(),
+  dateOfBirth: Joi.string().required(),
   comments: Joi.string().min(8).max(120).required(),
 });
 

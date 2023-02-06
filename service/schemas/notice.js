@@ -59,7 +59,7 @@ const noticeSchema = new Schema(
       default: "no comment",
     },
     birthday: {
-      type: Date,
+      type: String,
       maxlength: 10,
       default: "01.01.2000",
       required: [true, "Please, set a birthday date"],

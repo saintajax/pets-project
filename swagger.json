@@ -245,18 +245,18 @@
         }
       }
     },
-    "/notices/:id": {
+    "/notices/{id}": {
       "get": {
         "tags": ["Notices"],
-        "summary": "Get favorite notice by id",
-        "description": "Get favorite notice by id",
+        "summary": "Get notice by id",
+        "description": "Get notice by id",
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "required": true,
             "type": "String",
-            "description": "Favorite notice id"
+            "description": "Notice id"
           }
         ],
         "security": [
@@ -281,7 +281,7 @@
         }
       }
     },
-    "/notices/:id/favorites": {
+    "/notices/{id}/favorites": {
       "patch": {
         "tags": ["Notices"],
         "summary": "Update favorite notice by id",
@@ -318,18 +318,9 @@
       },
       "delete": {
         "tags": ["Notices"],
-        "summary": "Update favorite notice by id",
-        "description": "Update favorite notice by id",
+        "summary": "Delete favorite notice by id",
+        "description": "Delete favorite notice by id",
         "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          },
           {
             "in": "path",
             "name": "id",
@@ -421,7 +412,7 @@
         }
       }
     },
-    "/notices/user/:id": {
+    "/notices/user/{id}": {
       "delete": {
         "tags": ["Notices"],
         "summary": "Deleting user notification information",
@@ -617,7 +608,7 @@
         }
       }
     },
-    "/user/pets/delete/:petId": {
+    "/user/pets/delete/{petId}": {
       "patch": {
         "tags": ["User"],
         "summary": "Delete pet from user",
@@ -817,8 +808,8 @@
                       "example": "good pet"
                     },
                     "birthday": {
-                      "type": "Date",
-                      "example": "1999-12-31T22:00:00.000Z"
+                      "type": "String",
+                      "example": "22.12.2000"
                     },
                     "createdAt": {
                       "type": "Date",
@@ -845,8 +836,8 @@
                       "example": "John Doe"
                     },
                     "dateOfBirth": {
-                      "type": "Date",
-                      "example": "21-10-2020"
+                      "type": "String",
+                      "example": "21.10.2020"
                     },
                     "breed": {
                       "type": "String",
@@ -1077,8 +1068,8 @@
                       "example": "good pet"
                     },
                     "birthday": {
-                      "type": "Date",
-                      "example": "2020-12-11T22:00:00.000Z"
+                      "type": "String",
+                      "example": "22.01.2000"
                     },
                     "createdAt": {
                       "type": "Date",
@@ -1202,7 +1193,7 @@
                 },
                 "birthday": {
                   "type": "String",
-                  "example": "19-07-2022"
+                  "example": "22.11.2000"
                 },
                 "createdAt": {
                   "type": "Date",
@@ -1310,8 +1301,8 @@
             "example": "good pet"
           },
           "birthday": {
-            "type": "Date",
-            "example": "19-07-2022"
+            "type": "String",
+            "example": "22.11.2000"
           }
         }
       },
@@ -1374,7 +1365,7 @@
                   },
                   "birthday": {
                     "type": "String",
-                    "example": "19-07-2022"
+                    "example": "22.12.2022"
                   },
                   "_id": {
                     "type": "String",
@@ -1417,7 +1408,7 @@
           },
           "birthday": {
             "type": "String",
-            "example": "00.00.0000"
+            "example": "29.12.2000"
           }
         }
       },
@@ -1444,7 +1435,7 @@
                   },
                   "name": {
                     "type": "String",
-                    "example": "John Doe"
+                    "example": "John"
                   },
                   "email": {
                     "type": "String",
@@ -1461,7 +1452,7 @@
                   },
                   "birthday": {
                     "type": "String",
-                    "example": "00-00-0000"
+                    "example": "29.12.2000"
                   },
                   "avatar": {
                     "type": "String",
@@ -1517,8 +1508,8 @@
                           "example": "good pet"
                         },
                         "birthday": {
-                          "type": "Date",
-                          "example": "1999-12-31T22:00:00.000Z"
+                          "type": "String",
+                          "example": "20.12.2000"
                         },
                         "createdAt": {
                           "type": "Date",
@@ -1542,11 +1533,11 @@
                         },
                         "name": {
                           "type": "String",
-                          "example": "John Doe"
+                          "example": "John"
                         },
                         "dateOfBirth": {
-                          "type": "Date",
-                          "example": "21-10-2020"
+                          "type": "String",
+                          "example": "29.12.2020"
                         },
                         "breed": {
                           "type": "String",
@@ -1618,7 +1609,7 @@
                   },
                   "birthday": {
                     "type": "String",
-                    "example": "00-00-0000"
+                    "example": "29.12.2000"
                   },
                   "avatarURL": {
                     "type": "String",
@@ -1674,8 +1665,8 @@
                           "example": "good pet"
                         },
                         "birthday": {
-                          "type": "Date",
-                          "example": "1999-12-31T22:00:00.000Z"
+                          "type": "String",
+                          "example": "29.12.2000"
                         },
                         "createdAt": {
                           "type": "Date",
@@ -1702,8 +1693,8 @@
                           "example": "John Doe"
                         },
                         "dateOfBirth": {
-                          "type": "Date",
-                          "example": "1999-12-31T22:00:00.000Z"
+                          "type": "String",
+                          "example": "29.12.2000"
                         },
                         "breed": {
                           "type": "String",
@@ -1751,8 +1742,8 @@
             "example": "+380501111111"
           },
           "birthday": {
-            "type": "date",
-            "example": "20.01.2001"
+            "type": "String",
+            "example": "29.12.2001"
           },
           "avatar": {
             "type": "File"
@@ -1785,7 +1776,7 @@
           },
           "birthday": {
             "type": "String",
-            "example": "00.00.0000"
+            "example": "29.12.2000"
           },
           "avatar": {
             "type": "String",
@@ -1814,8 +1805,8 @@
             "example": "Tom"
           },
           "dateOfBirth": {
-            "type": "Date",
-            "example": "20-12-2020"
+            "type": "String",
+            "example": "29.12.2020"
           },
           "breed": {
             "type": "String",
@@ -1849,7 +1840,7 @@
                 "example": "Tom"
               },
               "dateOfBirth": {
-                "type": "Date",
+                "type": "String",
                 "example": "20-12-2020"
               },
               "breed": {

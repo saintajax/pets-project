@@ -2,7 +2,6 @@ const { User } = require("../service/schemas/user");
 const { NotAutorizedError } = require("../helpers/authErrors");
 const gravatar = require("gravatar");
 
-
 const { updateUser } = require("../service/auth");
 const {
   findUser,
@@ -39,8 +38,8 @@ const getInfo = async (req, res) => {
 
 const addPet = async (req, res) => {
   let avatar = "";
-  if (req.files) {
-    const { path: tempDir } = req.files[0];
+  if (req.file) {
+    const { path: tempDir } = req.file;
     const newAvatar = await upload(tempDir);
     avatar = newAvatar.secure_url;
   } else {
