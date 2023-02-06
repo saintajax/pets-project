@@ -9,7 +9,8 @@ const getAllNotices = async (req, res) => {
     const filter = { title: { $regex: q, $options: "i" }, category: category };
     const notices = await Notice.find(filter)
       .sort({ _id: -1 })
-      .skip((page - 1) * limit);
+      .skip((page - 1) * limit)
+      .limit(limit);
     const totalCount = await Notice.find(filter).count();
     res
       .json({ status: "success", code: 200, data: { notices, totalCount } })
