@@ -5,14 +5,8 @@
     "title": "Pet-ly API",
     "description": "API documentation for 'Pet-ly'."
   },
-  "consumes": [
-    "application/json",
-    "multipart/form-data"
-  ],
-  "produces": [
-    "application/json",
-    "multipart/form-data"
-  ],
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json", "multipart/form-data"],
   "servers": [
     {
       "url": "https://pet-ly.onrender.com/api"
@@ -43,9 +37,7 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Create a new user",
         "description": "Create a new user",
         "operationId": "createUser",
@@ -82,9 +74,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login user",
         "description": "Login user",
         "requestBody": {
@@ -120,22 +110,9 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logout user",
         "description": "Logout user by token in headers Autorization",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          }
-        ],
         "security": [
           {
             "Bearer": []
@@ -167,9 +144,7 @@
     },
     "/friends": {
       "get": {
-        "tags": [
-          "Friends"
-        ],
+        "tags": ["Friends"],
         "summary": "Get contact information about friends",
         "description": "Get contact information about friends",
         "responses": {
@@ -191,9 +166,7 @@
     },
     "/news": {
       "get": {
-        "tags": [
-          "News"
-        ],
+        "tags": ["News"],
         "summary": "Get news",
         "description": "Get news",
         "responses": {
@@ -215,22 +188,9 @@
     },
     "/notices": {
       "get": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get noticies",
         "description": "Get noticies",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          }
-        ],
         "security": [
           {
             "Bearer": []
@@ -255,22 +215,9 @@
     },
     "/notices/favorite": {
       "get": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get favorite noticies",
         "description": "Get favorite noticies",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          }
-        ],
         "security": [
           {
             "Bearer": []
@@ -295,21 +242,10 @@
     },
     "/notices/:id": {
       "get": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get favorite notice by id",
         "description": "Get favorite notice by id",
         "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          },
           {
             "in": "path",
             "name": "id",
@@ -342,21 +278,10 @@
     },
     "/notices/:id/favorites": {
       "patch": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Update favorite notice by id",
         "description": "Update favorite notice by id",
         "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          },
           {
             "in": "path",
             "name": "id",
@@ -387,9 +312,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Update favorite notice by id",
         "description": "Update favorite notice by id",
         "parameters": [
@@ -434,22 +357,9 @@
     },
     "/notices/addnotice": {
       "post": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get favorite noticies",
         "description": "Get favorite noticies",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          }
-        ],
         "security": [
           {
             "Bearer": []
@@ -482,24 +392,70 @@
         }
       }
     },
-    "/user/current": {
+    "/notices/user/own": {
       "get": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Get current user",
-        "description": "Get current user",
+        "tags": ["Notices"],
+        "summary": "Get information about user notification",
+        "description": "Get information about user notification",
+
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticiesResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/notices/user/:id": {
+      "delete": {
+        "tags": ["Notices"],
+        "summary": "Deleting user notification information",
+        "description": "Deleting user notification information by token in headers Autorization",
         "parameters": [
           {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
+            "in": "path",
+            "name": "id",
+            "type": "String",
             "required": true,
-            "description": "The token issued to the current user"
+            "description": "Noticies id"
           }
         ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Deleting the user's notification information has been successfully completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": ""
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Empty favorites"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/user/current": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get current user",
+        "description": "Get current user",
         "security": [
           {
             "Bearer": []
@@ -528,22 +484,9 @@
 
     "/user/info": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Get current user",
         "description": "Get current user",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          }
-        ],
         "security": [
           {
             "Bearer": []
@@ -572,22 +515,9 @@
 
     "/user/update": {
       "patch": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Update user information",
         "description": "Update user information",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          }
-        ],
         "security": [
           {
             "Bearer": []
@@ -637,22 +567,9 @@
     },
     "/user/pets/add": {
       "post": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Add pet to user",
         "description": "Add pet to user",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          }
-        ],
         "security": [
           {
             "Bearer": []
@@ -697,21 +614,10 @@
     },
     "/user/pets/delete/:petId": {
       "patch": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Delete pet from user",
         "description": "Delete pet from user",
         "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "String"
-            },
-            "required": true,
-            "description": "The token issued to the current user"
-          },
           {
             "in": "path",
             "name": "petId",
@@ -756,14 +662,11 @@
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "name": {
             "type": "String",
-            "example": "John Doe"
+            "example": "John"
           },
           "email": {
             "type": "String",
@@ -782,10 +685,6 @@
           "phone": {
             "type": "String",
             "example": "+380501111111"
-          },
-          "birthday": {
-            "type": "String",
-            "example": "00-00-0000"
           }
         }
       },
@@ -802,7 +701,7 @@
               },
               "name": {
                 "type": "String",
-                "example": "John Doe"
+                "example": "John"
               }
             }
           }
@@ -810,10 +709,7 @@
       },
       "LoginRequest": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "String",
@@ -852,7 +748,7 @@
               },
               "name": {
                 "type": "String",
-                "example": "John Doe"
+                "example": "John"
               },
               "cityRegion": {
                 "type": "String",
@@ -969,9 +865,7 @@
 
       "LogoutRequest": {
         "type": "object",
-        "required": [
-          "refreshToken"
-        ],
+        "required": ["refreshToken"],
         "properties": {
           "refreshToken": {
             "type": "String",
@@ -1178,8 +1072,8 @@
                       "example": "good pet"
                     },
                     "birthday": {
-                      "type": "String",
-                      "example": "19-07-2022"
+                      "type": "Date",
+                      "example": "2020-12-11T22:00:00.000Z"
                     },
                     "createdAt": {
                       "type": "Date",
@@ -1495,13 +1389,13 @@
           }
         }
       },
-      
+
       "UpdateUserRequest": {
         "type": "object",
         "properties": {
           "name": {
             "type": "String",
-            "example": "John Doe"
+            "example": "John"
           },
           "email": {
             "type": "String",
@@ -1518,11 +1412,7 @@
           },
           "birthday": {
             "type": "String",
-            "example": "00-00-0000"
-          },
-          "avatar": {
-            "type": "String",
-            "example": "//www.gravatar.com/avatar/6867d7469076bdce33bc75fee20918eb"
+            "example": "00.00.0000"
           }
         }
       },
@@ -1839,10 +1729,28 @@
       "UpdateUserRequestFile": {
         "type": "object",
         "properties": {
-          "fileName": {
+          "name": {
             "type": "String",
-            "example": "image.jpg",
-            "format": "binary"
+            "example": "John"
+          },
+          "email": {
+            "type": "email",
+            "example": "example@email.com"
+          },
+          "cityRegion": {
+            "type": "String",
+            "example": "Kyiv, Kyivska"
+          },
+          "phone": {
+            "type": "phone",
+            "example": "+380501111111"
+          },
+          "birthday": {
+            "type": "date",
+            "example": "20.01.2001"
+          },
+          "avatar": {
+            "type": "File"
           }
         }
       },
@@ -1855,7 +1763,7 @@
           },
           "name": {
             "type": "String",
-            "example": "John Doe"
+            "example": "John"
           },
           "email": {
             "type": "String",
@@ -1872,7 +1780,7 @@
           },
           "birthday": {
             "type": "String",
-            "example": "00-00-0000"
+            "example": "00.00.0000"
           },
           "avatar": {
             "type": "String",
@@ -1894,12 +1802,7 @@
       },
       "AddPetRequest": {
         "type": "object",
-        "required": [
-          "name",
-          "dateOfBirth",
-          "breed",
-          "comments"
-        ],
+        "required": ["name", "dateOfBirth", "breed", "comments"],
         "properties": {
           "name": {
             "type": "String",
@@ -1919,7 +1822,6 @@
           },
           "petsPhoto": {
             "type": "File"
-            
           }
         }
       },
@@ -1989,13 +1891,13 @@
             "example": "Pet deteted"
           }
         }
-      },
-      "securitySchemes": {
-        "Bearer": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
-        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
