@@ -1,5 +1,4 @@
 const cloudinary = require("cloudinary").v2;
-const fs = require("fs").promises;
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -20,7 +19,6 @@ const uploadImage = async (imagePath) => {
 
   try {
     const result = await cloudinary.uploader.upload(imagePath, options);
-    // await fs.unlink(imagePath);
     return result;
   } catch (error) {
     console.error(error);
