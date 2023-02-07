@@ -7,10 +7,10 @@ const findUser = async (email) => {
   return user;
 };
 
-const getUserInfo = async (id) => {
+const getUserInfo = async (userId) => {
   const user = await User.findOne(
-    { _id: id },
-    { password: 0, __v: 0, verify: 0, verificationToken: 0, token: 0 }
+    { _id: userId },
+    { _id: 0, name: 1, phone: 1, email: 1, pets: 0 }
   ).populate("pets");
   return { user };
 };
