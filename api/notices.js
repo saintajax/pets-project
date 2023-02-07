@@ -23,8 +23,8 @@ router.get("/user/own", authMiddleware, catchWrapper(getOwnNotice));
 router.post(
   "/addnotice",
   authMiddleware,
-  validateBody(schemas.noticesSchema),
   upload.single("noticePhoto"),
+  validateBody(schemas.noticesSchema),
   catchWrapper(addNotice)
 );
 router.patch("/:id/favorites", authMiddleware, catchWrapper(updateFavorites));

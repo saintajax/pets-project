@@ -47,6 +47,17 @@ const addNotice = async (req, res) => {
       comments,
       category,
     } = req.body;
+    console.log(
+      title,
+      name,
+      birthday,
+      breed,
+      sex,
+      location,
+      price,
+      comments,
+      category
+    );
 
     const notice = new Notice({
       title,
