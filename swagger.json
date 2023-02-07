@@ -5,8 +5,14 @@
     "title": "Pet-ly API",
     "description": "API documentation for 'Pet-ly'."
   },
-  "consumes": ["application/json", "multipart/form-data"],
-  "produces": ["application/json", "multipart/form-data"],
+  "consumes": [
+    "application/json",
+    "multipart/form-data"
+  ],
+  "produces": [
+    "application/json",
+    "multipart/form-data"
+  ],
   "servers": [
     {
       "url": "https://pet-ly.onrender.com/api",
@@ -42,7 +48,9 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Create a new user",
         "description": "Create a new user",
         "operationId": "createUser",
@@ -79,7 +87,9 @@
     },
     "/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login user",
         "description": "Login user",
         "requestBody": {
@@ -115,7 +125,9 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logout user",
         "description": "Logout user by token in headers Autorization",
         "security": [
@@ -149,7 +161,9 @@
     },
     "/friends": {
       "get": {
-        "tags": ["Friends"],
+        "tags": [
+          "Friends"
+        ],
         "summary": "Get contact information about friends",
         "description": "Get contact information about friends",
         "responses": {
@@ -171,7 +185,9 @@
     },
     "/news": {
       "get": {
-        "tags": ["News"],
+        "tags": [
+          "News"
+        ],
         "summary": "Get news",
         "description": "Get news",
         "responses": {
@@ -193,7 +209,9 @@
     },
     "/notices": {
       "get": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Get noticies",
         "description": "Get noticies",
         "parameters": [
@@ -226,7 +244,6 @@
             "description": "Searching request by category"
           }
         ],
-
         "responses": {
           "200": {
             "description": "success",
@@ -246,7 +263,9 @@
     },
     "/notices/favorite": {
       "get": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Get favorite noticies",
         "description": "Get favorite noticies",
         "security": [
@@ -273,7 +292,9 @@
     },
     "/notices/{id}": {
       "get": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Get notice by id",
         "description": "Get notice by id",
         "parameters": [
@@ -309,7 +330,9 @@
     },
     "/notices/{id}/favorites": {
       "patch": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Update favorite notice by id",
         "description": "Update favorite notice by id",
         "parameters": [
@@ -343,7 +366,9 @@
         }
       },
       "delete": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Delete favorite notice by id",
         "description": "Delete favorite notice by id",
         "parameters": [
@@ -379,7 +404,9 @@
     },
     "/notices/addnotice": {
       "post": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Get favorite noticies",
         "description": "Get favorite noticies",
         "security": [
@@ -416,7 +443,9 @@
     },
     "/notices/user/own": {
       "get": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Get information about user notification",
         "description": "Get information about user notification",
         "parameters": [
@@ -449,7 +478,11 @@
             "description": "Searching request by category"
           }
         ],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -469,7 +502,9 @@
     },
     "/notices/user/{id}": {
       "delete": {
-        "tags": ["Notices"],
+        "tags": [
+          "Notices"
+        ],
         "summary": "Deleting user notification information",
         "description": "Deleting user notification information by token in headers Autorization",
         "parameters": [
@@ -481,7 +516,11 @@
             "description": "Noticies id"
           }
         ],
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Deleting the user's notification information has been successfully completed",
@@ -504,7 +543,9 @@
     },
     "/user/current": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get current user",
         "description": "Get current user",
         "security": [
@@ -532,10 +573,11 @@
         }
       }
     },
-
     "/user/info": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get current user",
         "description": "Get current user",
         "security": [
@@ -563,10 +605,11 @@
         }
       }
     },
-
     "/user/update": {
       "patch": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update user information",
         "description": "Update user information",
         "security": [
@@ -618,7 +661,9 @@
     },
     "/user/pets/add": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Add pet to user",
         "description": "Add pet to user",
         "security": [
@@ -665,7 +710,9 @@
     },
     "/user/pets/delete/{petId}": {
       "delete": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Delete pet from user",
         "description": "Delete pet from user",
         "parameters": [
@@ -713,7 +760,10 @@
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "name": {
             "type": "String",
@@ -760,7 +810,10 @@
       },
       "LoginRequest": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "type": "String",
@@ -816,65 +869,7 @@
               "favorite": {
                 "type": "array",
                 "items": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "String",
-                      "example": "63a633f7790ca3934876ab29"
-                    },
-                    "category": {
-                      "type": "String",
-                      "example": "John"
-                    },
-                    "title": {
-                      "type": "String",
-                      "example": "New notice"
-                    },
-                    "breed": {
-                      "type": "String",
-                      "example": "Labrador"
-                    },
-                    "name": {
-                      "type": "String",
-                      "example": "Lessy"
-                    },
-                    "location": {
-                      "type": "String",
-                      "example": "Kyiv"
-                    },
-                    "sex": {
-                      "type": "String",
-                      "example": "female"
-                    },
-                    "price": {
-                      "type": "Number",
-                      "example": 1000
-                    },
-                    "owner": {
-                      "type": "String",
-                      "example": "63b89f63a2f28a3f4e4f6597"
-                    },
-                    "avatarURL": {
-                      "type": "String",
-                      "example": "https://res.cloudinary.com/dhfk2xkow/image/upload/v1672264113/3700_6_10_ckne9o.jpg"
-                    },
-                    "comments": {
-                      "type": "String",
-                      "example": "good pet"
-                    },
-                    "birthday": {
-                      "type": "String",
-                      "example": "22.12.2000"
-                    },
-                    "createdAt": {
-                      "type": "Date",
-                      "example": "1999-12-31T22:00:00.000Z"
-                    },
-                    "updatedAt": {
-                      "type": "Date",
-                      "example": "1999-12-31T22:00:00.000Z"
-                    }
-                  }
+                    "example": "63a633f7790ca3934876ab29"
                 }
               },
               "pets": {
@@ -913,10 +908,11 @@
           }
         }
       },
-
       "LogoutRequest": {
         "type": "object",
-        "required": ["refreshToken"],
+        "required": [
+          "refreshToken"
+        ],
         "properties": {
           "refreshToken": {
             "type": "String",
@@ -924,7 +920,6 @@
           }
         }
       },
-
       "FriendsResponse": {
         "type": "object",
         "properties": {
@@ -1162,12 +1157,65 @@
               "favorite": {
                 "type": "array",
                 "items": {
-                  "type": "String",
-                  "example": "63a85bf53ab74349ac3a80eb"
-                },
-                "totalCount": {
-                  "type": "Number",
-                  "example": 1
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "String",
+                      "example": "63a633f7790ca3934876ab29"
+                    },
+                    "category": {
+                      "type": "String",
+                      "example": "John"
+                    },
+                    "title": {
+                      "type": "String",
+                      "example": "New notice"
+                    },
+                    "breed": {
+                      "type": "String",
+                      "example": "Labrador"
+                    },
+                    "name": {
+                      "type": "String",
+                      "example": "Lessy"
+                    },
+                    "location": {
+                      "type": "String",
+                      "example": "Kyiv"
+                    },
+                    "sex": {
+                      "type": "String",
+                      "example": "female"
+                    },
+                    "price": {
+                      "type": "Number",
+                      "example": 1000
+                    },
+                    "owner": {
+                      "type": "String",
+                      "example": "63b89f63a2f28a3f4e4f6597"
+                    },
+                    "avatarURL": {
+                      "type": "String",
+                      "example": "https://res.cloudinary.com/dhfk2xkow/image/upload/v1672264113/3700_6_10_ckne9o.jpg"
+                    },
+                    "comments": {
+                      "type": "String",
+                      "example": "good pet"
+                    },
+                    "birthday": {
+                      "type": "String",
+                      "example": "20.12.2000"
+                    },
+                    "createdAt": {
+                      "type": "Date",
+                      "example": "1999-12-31T22:00:00.000Z"
+                    },
+                    "updatedAt": {
+                      "type": "Date",
+                      "example": "1999-12-31T22:00:00.000Z"
+                    }
+                  }
                 }
               }
             }
@@ -1440,7 +1488,6 @@
           }
         }
       },
-
       "UpdateUserRequest": {
         "type": "object",
         "properties": {
@@ -1516,65 +1563,7 @@
                   "favorite": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "_id": {
-                          "type": "String",
-                          "example": "63a633f7790ca3934876ab29"
-                        },
-                        "category": {
-                          "type": "String",
-                          "example": "John"
-                        },
-                        "title": {
-                          "type": "String",
-                          "example": "New notice"
-                        },
-                        "breed": {
-                          "type": "String",
-                          "example": "Labrador"
-                        },
-                        "name": {
-                          "type": "String",
-                          "example": "Lessy"
-                        },
-                        "location": {
-                          "type": "String",
-                          "example": "Kyiv"
-                        },
-                        "sex": {
-                          "type": "String",
-                          "example": "female"
-                        },
-                        "price": {
-                          "type": "Number",
-                          "example": 1000
-                        },
-                        "owner": {
-                          "type": "String",
-                          "example": "63b89f63a2f28a3f4e4f6597"
-                        },
-                        "avatarURL": {
-                          "type": "String",
-                          "example": "https://res.cloudinary.com/dhfk2xkow/image/upload/v1672264113/3700_6_10_ckne9o.jpg"
-                        },
-                        "comments": {
-                          "type": "String",
-                          "example": "good pet"
-                        },
-                        "birthday": {
-                          "type": "String",
-                          "example": "20.12.2000"
-                        },
-                        "createdAt": {
-                          "type": "Date",
-                          "example": "1999-12-31T22:00:00.000Z"
-                        },
-                        "updatedAt": {
-                          "type": "Date",
-                          "example": "1999-12-31T22:00:00.000Z"
-                        }
-                      }
+                        "example": "63a633f7790ca3934876ab29"
                     }
                   },
                   "pets": {
@@ -1623,7 +1612,6 @@
           }
         }
       },
-
       "InfoResponse": {
         "type": "object",
         "properties": {
@@ -1673,65 +1661,7 @@
                   "favorite": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "_id": {
-                          "type": "String",
-                          "example": "63a633f7790ca3934876ab29"
-                        },
-                        "category": {
-                          "type": "String",
-                          "example": "John"
-                        },
-                        "title": {
-                          "type": "String",
-                          "example": "New notice"
-                        },
-                        "breed": {
-                          "type": "String",
-                          "example": "Labrador"
-                        },
-                        "name": {
-                          "type": "String",
-                          "example": "Lessy"
-                        },
-                        "location": {
-                          "type": "String",
-                          "example": "Kyiv"
-                        },
-                        "sex": {
-                          "type": "String",
-                          "example": "female"
-                        },
-                        "price": {
-                          "type": "Number",
-                          "example": 1000
-                        },
-                        "owner": {
-                          "type": "String",
-                          "example": "63b89f63a2f28a3f4e4f6597"
-                        },
-                        "avatarURL": {
-                          "type": "String",
-                          "example": "https://res.cloudinary.com/dhfk2xkow/image/upload/v1672264113/3700_6_10_ckne9o.jpg"
-                        },
-                        "comments": {
-                          "type": "String",
-                          "example": "good pet"
-                        },
-                        "birthday": {
-                          "type": "String",
-                          "example": "29.12.2000"
-                        },
-                        "createdAt": {
-                          "type": "Date",
-                          "example": "1999-12-31T22:00:00.000Z"
-                        },
-                        "updatedAt": {
-                          "type": "Date",
-                          "example": "1999-12-31T22:00:00.000Z"
-                        }
-                      }
+                        "example": "63a633f7790ca3934876ab29"
                     }
                   },
                   "pets": {
@@ -1776,7 +1706,6 @@
           }
         }
       },
-
       "UpdateUserRequestFile": {
         "type": "object",
         "properties": {
@@ -1853,7 +1782,12 @@
       },
       "AddPetRequest": {
         "type": "object",
-        "required": ["name", "dateOfBirth", "breed", "comments"],
+        "required": [
+          "name",
+          "dateOfBirth",
+          "breed",
+          "comments"
+        ],
         "properties": {
           "name": {
             "type": "String",

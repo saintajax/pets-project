@@ -103,12 +103,11 @@ const updateFavorites = async (req, res, next) => {
 };
 
 const getOwnFavoriteNotices = async (req, res, next) => {
-  let { user } = req;
   const { _id } = req.user;
   const { page = 1, limit = 8 } = req.query;
   //   const skip = (page - 1) * limit;
 
-  const counter = user.favorite.length;
+  const counter = (await User.findById(_id)).favorite.length;
 
   let totalPage = 1;
 
@@ -121,9 +120,8 @@ const getOwnFavoriteNotices = async (req, res, next) => {
     next(HttpError(400, `Not Found, ${page} is last page`));
   }
 
-  user = await User.find({ _id }, { favorite: 1, _id: 0 });
-  console.log(user[0]);
-  const favorite = user[0].favorite;
+  const user = await User.findOne({ _id }, { favorite: 1, _id: 0 }).populate('favorite');
+  const favorite = user.favorite;
 
   res.status(200).json({
     code: 200,
