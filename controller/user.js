@@ -26,8 +26,8 @@ const getCurrent = async (req, res) => {
 
 const getInfo = async (req, res) => {
   if (!req.user) throw new NotAutorizedError("Not Autorized");
-  const { _id } = req.user;
-  const { user } = await getUserInfo(_id);
+  const { userId } = req.params;
+  const { user } = await getUserInfo(userId);
   res.status(200).json({
     status: "success",
     code: 200,

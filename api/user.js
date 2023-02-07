@@ -24,7 +24,7 @@ router.patch(
   catchWrapper(update)
 );
 router.get("/current", authMiddleware, catchWrapper(getCurrent));
-router.get("/info", authMiddleware, catchWrapper(getInfo));
+router.get("/info/:userId", authMiddleware, catchWrapper(getInfo));
 router.post(
   "/pets/add",
   authMiddleware,

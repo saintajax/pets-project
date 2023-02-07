@@ -539,11 +539,20 @@
         }
       }
     },
-    "/user/info": {
+    "/user/info/{userId}": {
       "get": {
         "tags": ["User"],
-        "summary": "Get current user",
-        "description": "Get current user",
+        "summary": "Get user info by id",
+        "description": "Get info by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "String",
+            "required": true,
+            "description": "User id"
+          }
+        ],
         "security": [
           {
             "Bearer": []
