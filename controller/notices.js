@@ -74,16 +74,10 @@ const addNotice = async (req, res) => {
 };
 
 const updateFavorites = async (req, res, next) => {
+  let { user } = req;
   const { id } = req.user;
   const { id: noticeId } = req.params;
 
-  //   let notice = await Notice.findById(id);
-  //   if (notice) {
-  //     next(HttpError(404));
-  //     return;
-  //   }
-
-  let user = await User.findById(id);
   const alreadyAdded = user.favorite.includes(noticeId);
 
   if (alreadyAdded) {
@@ -139,10 +133,10 @@ const getOwnFavoriteNotices = async (req, res, next) => {
 };
 
 const deleteFavorites = async (req, res, next) => {
+  let { user } = req;
   const { id } = req.user;
   const { id: noticeId } = req.params;
 
-  let user = await User.findById(id);
   const isExist = user.favorite.includes(noticeId);
 
   if (!isExist) {
