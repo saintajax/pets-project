@@ -196,11 +196,37 @@
         "tags": ["Notices"],
         "summary": "Get noticies",
         "description": "Get noticies",
-        "security": [
+        "parameters": [
           {
-            "Bearer": []
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "String",
+            "description": "The number of page"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "String",
+            "description": "Items limit per page"
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "type": "String",
+            "description": "Searching request by key"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "type": "String",
+            "description": "Searching request by category"
           }
         ],
+
         "responses": {
           "200": {
             "description": "success",
@@ -393,7 +419,36 @@
         "tags": ["Notices"],
         "summary": "Get information about user notification",
         "description": "Get information about user notification",
-
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "String",
+            "description": "The number of page"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "String",
+            "description": "Items limit per page"
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "type": "String",
+            "description": "Searching request by title, breed or location"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "type": "String",
+            "description": "Searching request by category"
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
