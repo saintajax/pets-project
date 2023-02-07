@@ -121,9 +121,10 @@ const getOwnFavoriteNotices = async (req, res, next) => {
     next(HttpError(400, `Not Found, ${page} is last page`));
   }
 
-  user = await User.find({ _id }, { favorite: 1, _id: 0 });
-  console.log(user[0]);
-  const favorite = user[0].favorite;
+  user = await User.findOne({ _id }, { favorite: 1, _id: 0 }).populate(
+    "favorite"
+  );
+  const favorite = user.favorite;
 
   res.status(200).json({
     code: 200,
