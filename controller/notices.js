@@ -48,14 +48,6 @@ const addNotice = async (req, res) => {
       category,
     } = req.body;
 
-    if (req.file) {
-      const { path: tempDir } = req.file;
-      const newPhoto = await upload(tempDir);
-      avatar = newPhoto.secure_url;
-    } else {
-      avatar = req.user.avatarURL;
-    }
-
     const notice = new Notice({
       title,
       name,
@@ -66,9 +58,17 @@ const addNotice = async (req, res) => {
       price,
       comments,
       category,
-      avatarUrl: avatar,
       owner: user._id,
     });
+
+    if (req.file) {
+      const { path: tempDir } = req.file;
+      const newPhoto = await upload(tempDir);
+      notice.avatarUrl = newPhoto.secure_url;
+    } else {
+      notice.setAvatar(req.user.email);
+    }
+
     await notice.save();
     res.json({ status: "created", code: 201, data: { notice } }).end();
   } catch (error) {

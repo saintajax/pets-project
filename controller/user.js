@@ -39,7 +39,7 @@ const getInfo = async (req, res) => {
 
 const addPet = async (req, res) => {
   let avatar = "";
-  const image = req.files[0]
+  const image = req.files[0];
   if (image) {
     const { path: tempDir } = image;
     const newAvatar = await upload(tempDir);
