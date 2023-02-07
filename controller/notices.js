@@ -5,8 +5,11 @@ const upload = require("../middlewares/upload");
 
 const getAllNotices = async (req, res) => {
   try {
-    const { category = "sell", q = "", page = 1, limit = 8 } = req.query;
-    const filter = { title: { $regex: q, $options: "i" }, category: category };
+    const { category, q = "", page = 1, limit = 8 } = req.query;
+    const filter = { title: { $regex: q, $options: "i" } };
+    if (category) {
+      filter.category = category;
+    }
     const notices = await Notice.find(filter)
       .sort({ _id: -1 })
       .skip((page - 1) * limit)
@@ -100,11 +103,12 @@ const updateFavorites = async (req, res, next) => {
 };
 
 const getOwnFavoriteNotices = async (req, res, next) => {
+  let { user } = req;
   const { _id } = req.user;
   const { page = 1, limit = 8 } = req.query;
   //   const skip = (page - 1) * limit;
 
-  const counter = (await User.findById(_id)).favorite.length;
+  const counter = user.favorite.length;
 
   let totalPage = 1;
 
@@ -117,7 +121,8 @@ const getOwnFavoriteNotices = async (req, res, next) => {
     next(HttpError(400, `Not Found, ${page} is last page`));
   }
 
-  const user = await User.find({ _id }, { favorite: 1, _id: 0 });
+  user = await User.find({ _id }, { favorite: 1, _id: 0 });
+  console.log(user[0]);
   const favorite = user[0].favorite;
 
   res.status(200).json({
@@ -161,29 +166,29 @@ const deleteFavorites = async (req, res, next) => {
 
 const getOwnNotice = async (req, res, next) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 8, q } = req.query;
-  const skip = (page - 1) * limit;
+  const { category, page = 1, limit = 8, q } = req.query;
 
-  const isUndefined = Boolean(q);
+  const filter = {
+    $and: [{ owner }],
+  };
 
-  let totalPage = 1;
-  let counter = 1;
-
-  if (!isUndefined) {
-    counter = await Notice.find({ owner }).count();
-  } else {
-    counter = await Notice.find({
-      $and: [
-        { owner },
-        {
-          $or: [
-            { title: { $regex: `${q}`, $options: "i" } },
-            { location: { $regex: `${q}`, $options: "i" } },
-          ],
-        },
-      ],
-    }).count();
+  if (category) {
+    filter.$and.push({ category: { $eq: category } });
   }
+
+  if (q) {
+    filter.$and.push({
+      $or: [
+        { title: { $regex: `${q}`, $options: "i" } },
+        { breed: { $regex: `${q}`, $options: "i" } },
+        { location: { $regex: `${q}`, $options: "i" } },
+      ],
+    });
+  }
+  const skip = (page - 1) * limit;
+  let totalPage = 1;
+
+  let counter = await Notice.find(filter).count();
 
   if (counter !== 0) {
     totalPage =
@@ -192,31 +197,13 @@ const getOwnNotice = async (req, res, next) => {
   let data = [];
 
   if (page > totalPage) {
-    next(HttpError(400, `Not Found, ${page} is last page`));
+    next(HttpError(400, `Not Found, ${totalPage} is last page`));
   }
 
-  if (isUndefined) {
-    data = await Notice.find(
-      {
-        $and: [
-          { owner },
-          {
-            $or: [
-              { title: { $regex: `${q}`, $options: "i" } },
-              { location: { $regex: `${q}`, $options: "i" } },
-            ],
-          },
-        ],
-      },
-      "",
-      { skip: Number(skip), limit: Number(limit) }
-    );
-  } else {
-    data = await Notice.find({ owner }, "", {
-      skip: Number(skip),
-      limit: Number(limit),
-    });
-  }
+  data = await Notice.find(filter)
+    .sort({ _id: -1 })
+    .skip(Number(skip))
+    .limit(Number(limit));
 
   res.status(200).json({
     code: 200,
