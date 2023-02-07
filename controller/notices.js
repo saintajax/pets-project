@@ -1,7 +1,7 @@
 const { User } = require("../service/schemas/user");
 const { Notice } = require("../service/schemas/notice");
 const HttpError = require("../helpers/httpErrors");
-const upload = require("../middlewares/upload");
+const upload = require("../helpers/cloudinary");
 
 const getAllNotices = async (req, res) => {
   try {

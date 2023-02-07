@@ -86,7 +86,7 @@ const noticesSchema = Joi.object({
   }),
   avatarUrl: Joi.string(),
   comments: Joi.string().min(5).max(120),
-  birthday: Joi.string().pattern(new RegExp(birthdayRegexp)).required(),
+  birthday: Joi.string().required(),
 });
 
 const updateFavoriteSchema = Joi.object({
