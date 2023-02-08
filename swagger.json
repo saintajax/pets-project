@@ -1704,7 +1704,33 @@
           "pets": {
             "type": "array",
             "items": {
-              "example": "63b5b82ffe500173aca6defb"
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "String",
+                  "example": "63a633f7790ca3934876ab29"
+                },
+                "name": {
+                  "type": "String",
+                  "example": "John"
+                },
+                "dateOfBirth": {
+                  "type": "String",
+                  "example": "29.12.2020"
+                },
+                "breed": {
+                  "type": "String",
+                  "example": "Labrador"
+                },
+                "photoURL": {
+                  "type": "String",
+                  "example": "//www.gravatar.com/avatar/6867d7469076bdce33bc75fee20918eb"
+                },
+                "owner": {
+                  "type": "String",
+                  "example": "63a633f7790ca3934876ab29"
+                }
+              }
             }
           }
         }

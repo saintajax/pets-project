@@ -117,7 +117,7 @@ const updateUser = async (userId, body, avatarURL) => {
         verificationToken: 0,
       },
     }
-  );
+  ).populate('pets');
   return result;
 };
 
