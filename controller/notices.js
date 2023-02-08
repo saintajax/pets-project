@@ -107,7 +107,6 @@ const getOwnFavoriteNotices = async (req, res, next) => {
   let { user, query } = req;
   const { _id } = user;
   let { category, q = "", page = 1, limit = 8 } = query;
-  console.log(q);
   if (category) {
     filter.category = category;
   }
