@@ -1,5 +1,6 @@
 const { User } = require("../service/schemas/user");
 const { Notice } = require("../service/schemas/notice");
+const { updateFavorite } = require("../service/user");
 const HttpError = require("../helpers/httpErrors");
 const upload = require("../helpers/cloudinary");
 
@@ -103,25 +104,53 @@ const updateFavorites = async (req, res, next) => {
 };
 
 const getOwnFavoriteNotices = async (req, res, next) => {
-  let { user } = req;
+  let { user, query } = req;
   const { _id } = user;
-  let { page = 1, limit = 8 } = req.query;
+  let { category, q = "", page = 1, limit = 8 } = query;
+  console.log(q);
+  if (category) {
+    filter.category = category;
+  }
+
   limit = parseInt(limit) > 8 ? 8 : parseInt(limit);
   page = parseInt(page);
   const skip = (page - 1) * limit;
-  const counter = user.favorite.length;
+
+  const allFavNotice = await User.find(
+    { _id },
+    { favorite: 1, _id: 0 }
+  ).populate("favorite");
+
+  const actualFavId = [];
+  allFavNotice[0].favorite.map((item) => {
+    if (user.favorite.includes(item._id.toString())) {
+      actualFavId.push(item._id);
+    }
+  });
+
+  let counter = actualFavId.length;
+
+  if (counter !== user.favorite.length) {
+    await updateFavorite(_id, actualFavId);
+  }
+
   let totalPage = 1;
 
+  if (page > totalPage) {
+    next(HttpError(400, `Not Found, ${page - 1} is last page`));
+  }
+  const dbUser = await User.find(
+    { _id },
+    { favorite: { $slice: [skip, limit] } }
+  ).populate({ path: "favorite", match: { title: { $regex: q } } });
+  const favorite = dbUser[0].favorite;
+
+  counter = favorite.length;
   if (counter !== 0) {
     totalPage =
       counter % limit !== 0 ? Math.floor(counter / limit) + 1 : counter / limit;
   }
 
-  if (page > totalPage) {
-    next(HttpError(400, `Not Found, ${page-1} is last page`));
-  }
-  const dbUser = await User.find({ _id }, {favorite:{$slice:[skip, limit]}}).populate("favorite");
-  const favorite = dbUser[0].favorite;
   res.status(200).json({
     code: 200,
     status: "success",

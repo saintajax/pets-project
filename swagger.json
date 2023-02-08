@@ -5,14 +5,8 @@
     "title": "Pet-ly API",
     "description": "API documentation for 'Pet-ly'."
   },
-  "consumes": [
-    "application/json",
-    "multipart/form-data"
-  ],
-  "produces": [
-    "application/json",
-    "multipart/form-data"
-  ],
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json", "multipart/form-data"],
   "servers": [
     {
       "url": "https://pet-ly.onrender.com/api",
@@ -48,9 +42,7 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Create a new user",
         "description": "Create a new user",
         "operationId": "createUser",
@@ -87,9 +79,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login user",
         "description": "Login user",
         "requestBody": {
@@ -125,9 +115,7 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logout user",
         "description": "Logout user by token in headers Autorization",
         "security": [
@@ -161,9 +149,7 @@
     },
     "/friends": {
       "get": {
-        "tags": [
-          "Friends"
-        ],
+        "tags": ["Friends"],
         "summary": "Get contact information about friends",
         "description": "Get contact information about friends",
         "responses": {
@@ -185,9 +171,7 @@
     },
     "/news": {
       "get": {
-        "tags": [
-          "News"
-        ],
+        "tags": ["News"],
         "summary": "Get news",
         "description": "Get news",
         "responses": {
@@ -209,9 +193,7 @@
     },
     "/notices": {
       "get": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get noticies",
         "description": "Get noticies",
         "parameters": [
@@ -263,11 +245,39 @@
     },
     "/notices/favorite": {
       "get": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get favorite noticies",
         "description": "Get favorite noticies",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "String",
+            "description": "The number of page"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "String",
+            "description": "Items limit per page"
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "type": "String",
+            "description": "Searching request by key"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "type": "String",
+            "description": "Searching request by category"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -292,9 +302,7 @@
     },
     "/notices/{id}": {
       "get": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get notice by id",
         "description": "Get notice by id",
         "parameters": [
@@ -330,9 +338,7 @@
     },
     "/notices/{id}/favorites": {
       "patch": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Update favorite notice by id",
         "description": "Update favorite notice by id",
         "parameters": [
@@ -366,9 +372,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Delete favorite notice by id",
         "description": "Delete favorite notice by id",
         "parameters": [
@@ -404,9 +408,7 @@
     },
     "/notices/addnotice": {
       "post": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get favorite noticies",
         "description": "Get favorite noticies",
         "security": [
@@ -443,9 +445,7 @@
     },
     "/notices/user/own": {
       "get": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Get information about user notification",
         "description": "Get information about user notification",
         "parameters": [
@@ -502,9 +502,7 @@
     },
     "/notices/user/{id}": {
       "delete": {
-        "tags": [
-          "Notices"
-        ],
+        "tags": ["Notices"],
         "summary": "Deleting user notification information",
         "description": "Deleting user notification information by token in headers Autorization",
         "parameters": [
@@ -543,9 +541,7 @@
     },
     "/user/current": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Get current user",
         "description": "Get current user",
         "security": [
@@ -575,9 +571,7 @@
     },
     "/user/info/{userId}": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Get user info by id",
         "description": "Get info by id",
         "parameters": [
@@ -611,9 +605,7 @@
     },
     "/user/update": {
       "patch": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Update user information",
         "description": "Update user information",
         "security": [
@@ -665,9 +657,7 @@
     },
     "/user/pets/add": {
       "post": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Add pet to user",
         "description": "Add pet to user",
         "security": [
@@ -714,9 +704,7 @@
     },
     "/user/pets/delete/{petId}": {
       "delete": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Delete pet from user",
         "description": "Delete pet from user",
         "parameters": [
@@ -764,10 +752,7 @@
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "name": {
             "type": "String",
@@ -814,10 +799,7 @@
       },
       "LoginRequest": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "String",
@@ -914,9 +896,7 @@
       },
       "LogoutRequest": {
         "type": "object",
-        "required": [
-          "refreshToken"
-        ],
+        "required": ["refreshToken"],
         "properties": {
           "refreshToken": {
             "type": "String",
@@ -1731,12 +1711,7 @@
       },
       "AddPetRequest": {
         "type": "object",
-        "required": [
-          "name",
-          "dateOfBirth",
-          "breed",
-          "comments"
-        ],
+        "required": ["name", "dateOfBirth", "breed", "comments"],
         "properties": {
           "name": {
             "type": "String",

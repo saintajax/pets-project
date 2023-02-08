@@ -39,4 +39,29 @@ const deleteNewPet = async (owner, petId) => {
   return petId;
 };
 
-module.exports = { findUser, getUserInfo, addNewPet, deleteNewPet };
+const updateFavorite = async (userId, favorite) => {
+  const result = await User.findOneAndUpdate(
+    { _id: userId },
+    {
+      $set: { favorite },
+    },
+    {
+      new: true,
+      fields: {
+        password: 0,
+        __v: 0,
+        verify: 0,
+        verificationToken: 0,
+      },
+    }
+  );
+  return result;
+};
+
+module.exports = {
+  findUser,
+  getUserInfo,
+  addNewPet,
+  deleteNewPet,
+  updateFavorite,
+};
