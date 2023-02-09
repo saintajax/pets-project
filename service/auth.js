@@ -11,6 +11,7 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 const uuid = require("uuid");
 const { RefreshTokens } = require("./schemas/refreshToken");
+const HttpError = require("../helpers/httpErrors");
 
 const sendVerification = async (email, verificationToken) => {
   const transport = nodemailer.createTransport({
@@ -25,7 +26,7 @@ const sendVerification = async (email, verificationToken) => {
     from: process.env.MY_EMAIL,
     to: email,
     subject: "Petly verification",
-    text: `Plz confirm your email ${process.env.BASE_URL}/api/auth/verify/${verificationToken}`,
+    text: `Plz confirm your email https://petly-one.netlify.app/verification/${verificationToken}`,
   });
 };
 
@@ -73,8 +74,8 @@ const verifyUser = async (verificationToken) => {
 };
 
 const loginUser = async (password, email) => {
-  const login = await User.findOne({ email, verify: true })
-  .populate("pets");
+  const login = await User.findOne({ email }).populate("pets");
+
   if (!login || !(await bcrypt.compare(password, login.password)))
     throw new NotAutorizedError("Email or password is wrong");
   const token = await jwt.sign(
@@ -86,13 +87,15 @@ const loginUser = async (password, email) => {
       expiresIn: 5 * 24 * 60 * 60,
     }
   );
+  if (!login.verify) {
+    throw HttpError(401, "Please, confirm your email");
+  }
   const refreshToken = new RefreshTokens({
     refreshToken: uuid.v4(),
     expiresIn: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
     userId: login._id,
   });
   const refreshTokens = await refreshToken.save();
-  // const user = await User.findOneAndUpdate({ _id: login._id }, { token });
   return {
     accessToken: token,
     refreshToken: refreshTokens.refreshToken,

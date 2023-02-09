@@ -31,15 +31,26 @@ const repeatEmailController = async (req, res, next) => {
 const login = async (req, res, next) => {
   const { password, email } = req.body;
   const result = await loginUser(password, email);
+
   const {
     accessToken,
     refreshToken,
-    user: { _id, name, cityRegion, phone, favorite, pets , avatarURL, birthday },
+    user: { _id, name, cityRegion, phone, favorite, pets, avatarURL, birthday },
   } = result;
   res.status(200).json({
     accessToken,
     refreshToken,
-    user: { _id, email, name, cityRegion, phone, favorite, pets, avatarURL, birthday },
+    user: {
+      _id,
+      email,
+      name,
+      cityRegion,
+      phone,
+      favorite,
+      pets,
+      avatarURL,
+      birthday,
+    },
   });
 };
 
