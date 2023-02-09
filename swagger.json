@@ -147,6 +147,53 @@
         }
       }
     },
+    "/auth/verify/{verificationToken}": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Email verification",
+        "description": "Email verification",
+        "responses": {
+          "200": {
+            "description": "Verification successful"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/auth/verify/": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Resend email verification message",
+        "description": "Resend email verification message",
+        "requestBody": {
+          "description": "Resend email verification message",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepeatVerifyMessage"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Verification successful"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/friends": {
       "get": {
         "tags": ["Friends"],
@@ -891,6 +938,17 @@
                 }
               }
             }
+          }
+        }
+      },
+      "RepeatVerifyMessage": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "String",
+            "format": "email",
+            "example": "example@email.com"
           }
         }
       },
