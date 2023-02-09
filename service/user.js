@@ -1,6 +1,5 @@
 const { User } = require("./schemas/user");
 const { Pets } = require("./schemas/pets");
-// const gravatar = require("gravatar");
 
 const findUser = async (email) => {
   const user = await User.findOne({ email }, { password: 0 }).populate("pets");

@@ -37,7 +37,6 @@ const userSchema = new mongoose.Schema({
   favorite: [
     { type: mongoose.SchemaTypes.ObjectId, ref: "notice", default: [] },
   ],
-  // token: String,
   avatarURL: String,
 });
 userSchema.pre("save", async function () {
